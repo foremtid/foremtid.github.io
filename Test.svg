@@ -43,7 +43,7 @@
 
     // Funktion, um die Linie zu blinken
     function blinkLine() {
-      setInterval(toggleBlink, Math.floor(Math.random() * 3) + 1); // Zufällige Zeit zwischen 500ms und 2500ms
+      setInterval(toggleBlink, Math.floor(Math.random() * 500) + 250); // Zufällige Zeit zwischen 500ms und 2500ms
     }
 
     // Starte das Blinken, sobald das Dokument geladen ist
