@@ -26,7 +26,7 @@
     var Fensterbreite = window.innerWidth;
     var Fensterhöhe = window.innerHeight;
 
-    var Spaltenanzahl = Math.ceil(Fenterbreite / 20);
+    var Spaltenanzahl = Math.ceil(Fensterbreite / 20);
     var Zeilenanzahl  = Math.ceil(Fensterhöhe / 20);
     
     var Auflösung = window.devicePixelRatio;
