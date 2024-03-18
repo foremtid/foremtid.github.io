@@ -9,7 +9,7 @@
   <!-- Gestrichelte Linie -->
   <line id="blinkLine" x1="1" y1="1" x2="99" y2="150" stroke="yellow" stroke-width="1" stroke-dasharray="5" opacity="0.6" display="inherit" />
 
-  <line x1="50" y1="50" x2="50" y2="150" stroke="gray" stroke-width="2"/>
+  <line x1="411" y1="914" x2="250" y2="914" stroke="gray" stroke-width="2"/>
   <text id="MeinText" fill="#789abc" font-size="45" font-family="Verdana" x="50" y="86">SVG</text>
 
   <script type="text/javascript">
