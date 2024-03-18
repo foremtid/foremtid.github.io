@@ -12,7 +12,7 @@
   <line id="Linie4" x1="0" y1="15.56" x2="0" y2="17.78" stroke="#888888" stroke-width="1" />
   
   <!-- Gestrichelte Linie -->
-  <line id="blinkLine" x1="1" y1="1" x2="99" y2="150" stroke="yellow" stroke-width="1" stroke-dasharray="5" opacity="0.6" display="inherit" />
+  <line id="blinkLine" x1="1" y1="1" x2="99" y2="150" stroke="#aa0000" stroke-width="1" stroke-dasharray="5" opacity="0.381" display="inherit" />
 
   <line x1="411" y1="914" x2="250" y2="914" stroke="gray" stroke-width="2"/>
   <line x1="411" y1="914" x2="980" y2="1798" stroke="gray" stroke-width="2"/>
@@ -43,7 +43,7 @@
 
     // Funktion, um die Linie zu blinken
     function blinkLine() {
-      setInterval(toggleBlink, Math.floor(Math.random() * 500) + 250); // Zufällige Zeit zwischen 500ms und 2500ms
+      setInterval(toggleBlink, Math.floor(Math.random() * 1000) + 500); // Zufällige Zeit zwischen 500ms und 2500ms
     }
 
     // Starte das Blinken, sobald das Dokument geladen ist
