@@ -6,10 +6,10 @@
      width="100%" height="100%" 
      viewBox="0 0 window.innerWidth window.innerHeight">
 
-  <line id="Linie1" x1="0" y1="11.11" x2="0" y2="22.22" stroke="#888888" stroke-width="1" />
-  <line id="Linie2" x1="0" y1="33.33" x2="0" y2="44.44" stroke="#888888" stroke-width="1" />
-  <line id="Linie3" x1="0" y1="55.56" x2="0" y2="66.67" stroke="#888888" stroke-width="1" />
-  <line id="Linie4" x1="0" y1="77.78" x2="0" y2="88.89" stroke="#888888" stroke-width="1" />
+  <line id="Linie1" x1="0" y1="2.22" x2="0" y2="4.44" stroke="#888888" stroke-width="1" />
+  <line id="Linie2" x1="0" y1="6.66" x2="0" y2="8.88" stroke="#888888" stroke-width="1" />
+  <line id="Linie3" x1="0" y1="11.12" x2="0" y2="13.34" stroke="#888888" stroke-width="1" />
+  <line id="Linie4" x1="0" y1="15.56" x2="0" y2="17.78" stroke="#888888" stroke-width="1" />
   
   <!-- Gestrichelte Linie -->
   <line id="blinkLine" x1="1" y1="1" x2="99" y2="150" stroke="yellow" stroke-width="1" stroke-dasharray="5" opacity="0.6" display="inherit" />
