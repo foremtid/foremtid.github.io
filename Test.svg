@@ -1,0 +1,48 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg xmlns="http://www.w3.org/2000/svg" 
+     width="100%" height="100%" 
+     viewBox="0 0 window.innerWidth window.innerHeight">
+
+  <!-- Gestrichelte Linie -->
+  <line id="blinkLine" x1="1" y1="1" x2="99" y2="150" stroke="yellow" stroke-width="1" stroke-dasharray="5" opacity="0.6" display="inherit" />
+
+  <line x1="50" y1="50" x2="50" y2="150" stroke="gray" stroke-width="2"/>
+  <text id="MeinText" fill="#789abc" font-size="45" font-family="Verdana" x="50" y="86">SVG</text>
+
+  <script type="text/javascript">
+    // Bildschirmabmessungen ermitteln
+    var Bildschirmbreite = screen.width;
+    var Bildschirmhöhe   = screen.height;
+    
+    var Fensterbreite = window.innerWidth;
+    var Fensterhöhe = window.innerHeight;
+    
+    var Auflösung = window.devicePixelRatio;
+    
+    var MeinText = document.getElementById('MeinText');
+    MeinText.textContent = Auflösung + " " + Bildschirmbreite + " " + Bildschirmhöhe + " " + Fensterbreite + " " + Fensterhöhe;
+    
+  
+    // Funktion, um die Linie ein- und auszublenden
+    function toggleBlink() {
+      var line = document.getElementById("blinkLine");
+      line.style.display = (line.style.display == "none") ? "inherit" : "none";
+    }
+
+    // Funktion, um die Linie zu blinken
+    function blinkLine() {
+      setInterval(toggleBlink, Math.floor(Math.random() * 3) + 1); // Zufällige Zeit zwischen 500ms und 2500ms
+    }
+
+    // Starte das Blinken, sobald das Dokument geladen ist
+    window.onload = blinkLine;
+    //blinkLine;
+    //blinkLine;
+    //blinkLine;
+toggleBlink;
+  </script>
+</svg>
+
