@@ -1,57 +1,181 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
-  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-
-<svg xmlns="http://www.w3.org/2000/svg" 
-     width="100%" height="100%" 
-     viewBox="0 0 window.innerWidth window.innerHeight">
-
-  <line id="Linie1" x1="0" y1="2.22" x2="0" y2="4.44" stroke="#888888" stroke-width="1" />
-  <line id="Linie2" x1="0" y1="6.66" x2="0" y2="8.88" stroke="#888888" stroke-width="1" />
-  <line id="Linie3" x1="0" y1="11.12" x2="0" y2="13.34" stroke="#888888" stroke-width="1" />
-  <line id="Linie4" x1="0" y1="15.56" x2="0" y2="17.78" stroke="#888888" stroke-width="1" />
-  
-  <!-- Gestrichelte Linie -->
-  <line id="blinkLine" x1="1" y1="1" x2="99" y2="150" stroke="#aa0000" stroke-width="1" stroke-dasharray="5" opacity="0.381" display="inherit" />
-
-  <line x1="411" y1="914" x2="250" y2="914" stroke="gray" stroke-width="2"/>
-  <line x1="411" y1="914" x2="980" y2="1798" stroke="gray" stroke-width="2"/>
-  <text id="MeinText" fill="#789abc" font-size="45" font-family="Verdana" x="50" y="86">SVG</text>
-
+<svg xmlns    = "http://www.w3.org/2000/svg"
+     id       = "Hintergrund"
+     width    = "100%"
+     height   = "100%"
+     viewBox  = "0 0 100% 100%">
+  <style>
+    .Segmente {
+      stroke:           #7f7f7f;
+      stroke-width:     0.618;
+      stroke-opacity:   0.982;
+      stroke-linecap:   round;
+      stroke-dasharray: 1, 1.62;
+    }
+  </style>
   <script type="text/javascript">
-    // Bildschirmabmessungen ermitteln
-    var Bildschirmbreite = screen.width;
-    var Bildschirmhöhe   = screen.height;
-    
-    var Fensterbreite = window.innerWidth;
-    var Fensterhöhe = window.innerHeight;
+  <![CDATA[
+    var X_Versatz       = 3.5;
+    var Y_Versatz       = 3.0;
+    var Streckfaktor    = window.devicePixelRatio;
+    var Segmentlänge    = (1 + 4 * (1.62 + 1)) * Streckfaktor;
+    var Spaltenbreite   = Segmentlänge * Math.cos(Math.PI / 6);
+    var Zeilenhöhe      = Segmentlänge * 1.5;
+    var AbstandslückeS  = (8 - 4 * Math.sqrt(3)) * Streckfaktor;
+    var AbstandslückeDX = AbstandslückeS * Math.cos(Math.PI / 6);
+    var AbstandslückeDY = AbstandslückeS * Math.sin(Math.PI / 6);
 
-    var Spaltenanzahl = Math.ceil(Fensterbreite / 20);
-    var Zeilenanzahl  = Math.ceil(Fensterhöhe / 20);
-    
-    var Auflösung = window.devicePixelRatio;
-    
-    var MeinText = document.getElementById('MeinText');
-    MeinText.textContent = Auflösung + " " + Bildschirmbreite + " " + Bildschirmhöhe + " " + Fensterbreite + " " + Fensterhöhe;
-    
-  
-    // Funktion, um die Linie ein- und auszublenden
-    function toggleBlink() {
-      var line = document.getElementById("blinkLine");
-      line.style.display = (line.style.display == "none") ? "inherit" : "none";
+    var Zeilenanzahl    = 0;
+    var Spaltenanzahl   = 0;
+    var Fensterhöhe     = 0;
+    var Fensterbreite   = 0;
+
+    var X_Rasterindexgrenze      = 0;
+    var Y_Rasterindexgrenze      = 0;
+    var Anzeigenbereichsänderung = 1;
+
+    var Hintergrund = document.getElementById("Hintergrund");
+
+
+
+    async function Warte(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    // Funktion, um die Linie zu blinken
-    function blinkLine() {
-      setInterval(toggleBlink, Math.floor(Math.random() * 1000) + 500); // Zufällige Zeit zwischen 500ms und 2500ms
+
+
+    async function S_SegmentErstellen(Z, S) {
+      var NeueLinie = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      NeueLinie.setAttributeNS(null, "id", "L" + Z + "_" + S + "_1");
+      NeueLinie.setAttributeNS(null, "class", "Segmente");
+      NeueLinie.setAttributeNS(null, "x1", X_Versatz + S * Spaltenbreite);
+      NeueLinie.setAttributeNS(null, "x2", X_Versatz + S * Spaltenbreite);
+      if ((Z % 2 == 1 && S % 2 == 0) || (Z % 2 == 0 && S % 2 == 1)) {
+        NeueLinie.setAttributeNS(null, "y1", Y_Versatz + Z * Zeilenhöhe + AbstandslückeS - Segmentlänge);
+        NeueLinie.setAttributeNS(null, "y2", Y_Versatz + Z * Zeilenhöhe - AbstandslückeS);
+      } else {
+        NeueLinie.setAttributeNS(null, "y1", Y_Versatz + (Z - 1) * Zeilenhöhe + AbstandslückeS);
+        NeueLinie.setAttributeNS(null, "y2", Y_Versatz + (Z - 1) * Zeilenhöhe - AbstandslückeS + Segmentlänge);
+      }
+
+      Hintergrund.appendChild(NeueLinie);
     }
 
-    // Starte das Blinken, sobald das Dokument geladen ist
-    window.onload = blinkLine;
-    //blinkLine;
-    //blinkLine;
-    //blinkLine;
-toggleBlink;
+
+
+    async function D_SegmenteErstellen(Z, S) {
+      var NeueLinie1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      NeueLinie1.setAttributeNS(null, "id", "L" + Z + "_" + S + "_0");
+      NeueLinie1.setAttributeNS(null, "class", "Segmente");
+      NeueLinie1.setAttributeNS(null, "x1", X_Versatz + AbstandslückeDX + Spaltenbreite * (S - 1));
+      NeueLinie1.setAttributeNS(null, "x2", X_Versatz - AbstandslückeDX + Spaltenbreite * S);
+      if ((Z % 2 == 1 && S % 2 == 1) || (Z % 2 == 0 && S % 2 == 0)) {
+        NeueLinie1.setAttributeNS(null, "y1", Y_Versatz - AbstandslückeDY + Zeilenhöhe * Z - Segmentlänge);
+        NeueLinie1.setAttributeNS(null, "y2", Y_Versatz + AbstandslückeDY + Zeilenhöhe * (Z - 1));
+      } else {
+        NeueLinie1.setAttributeNS(null, "y1", Y_Versatz + AbstandslückeDY + Zeilenhöhe * (Z - 1));
+        NeueLinie1.setAttributeNS(null, "y2", Y_Versatz - AbstandslückeDY + Zeilenhöhe * Z - Segmentlänge);
+      }
+      Hintergrund.appendChild(NeueLinie1);
+      
+      var NeueLinie2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      NeueLinie2.setAttributeNS(null, "id", "L" + Z + "_" + S + "_2");
+      NeueLinie2.setAttributeNS(null, "class", "Segmente");
+      NeueLinie2.setAttributeNS(null, "x1", X_Versatz + AbstandslückeDX + Spaltenbreite * (S - 1));
+      NeueLinie2.setAttributeNS(null, "x2", X_Versatz - AbstandslückeDX + Spaltenbreite * S);
+      if ((Z % 2 == 1 && S % 2 == 1) || (Z % 2 == 0 && S % 2 == 0)) {
+        NeueLinie2.setAttributeNS(null, "y1", Y_Versatz - AbstandslückeDY + Zeilenhöhe * Z);
+        NeueLinie2.setAttributeNS(null, "y2", Y_Versatz + AbstandslückeDY + Zeilenhöhe * (Z - 1) + Segmentlänge);
+      } else {
+        NeueLinie2.setAttributeNS(null, "y1", Y_Versatz + AbstandslückeDY + Zeilenhöhe * (Z - 1) + Segmentlänge);
+        NeueLinie2.setAttributeNS(null, "y2", Y_Versatz - AbstandslückeDY + Zeilenhöhe * Z);
+      }
+      Hintergrund.appendChild(NeueLinie2);
+    }
+    
+
+
+    async function RasterAuffüllen() {
+      if (Zeilenanzahl < Y_Rasterindexgrenze) {
+        for (let Z = Zeilenanzahl + 1; Z <= Y_Rasterindexgrenze; Z++) {
+          // Erzeuge erstes Strichlein…
+          await S_SegmentErstellen(Z, 0);
+          for (let S = 1; S <= Spaltenanzahl; S++) {
+            // Die drei Liniensgemente erstellen…
+            await S_SegmentErstellen(Z, S);
+            await D_SegmenteErstellen(Z, S);
+          }
+        }
+      }
+
+      if (Spaltenanzahl < X_Rasterindexgrenze) {
+        for (let Z = 1; Z <= Y_Rasterindexgrenze; Z++) {
+          for (let S = Spaltenanzahl + 1; S <= X_Rasterindexgrenze; S++) {
+            // Die drei Liniensegmente erstellen…
+            await S_SegmentErstellen(Z, S);
+            await D_SegmenteErstellen(Z, S);
+          }
+        }
+      } 
+
+      Zeilenanzahl  = Y_Rasterindexgrenze;
+      Spaltenanzahl = X_Rasterindexgrenze;     
+    }
+
+
+
+    async function AnzeigenbereichAnFensterAnpassen() {
+      // Raster auffüllen, falls die Fensterbreite die Rasterbreite oder die Fensterhöhe die Rasterhöhe überschreitet
+      // Anzeigebereich einschränken, wenn der Fensterbereich kleiner als der Anzeigebereich wird
+      X_Rasterindexgrenze = parseInt(Math.floor((window.innerWidth - X_Versatz) / Spaltenbreite));
+      Y_Rasterindexgrenze = parseInt(Math.floor((window.innerHeight - Y_Versatz) / Zeilenhöhe));
+
+      if (Y_Rasterindexgrenze > Zeilenanzahl ||
+          X_Rasterindexgrenze > Spaltenanzahl)
+        await RasterAuffüllen();
+    }
+
+
+
+    async function AnzeigenbereichNeuBestimmen() {
+      Anzeigenbereichsänderung = 1;
+    }
+
+
+
+    async function Hintergrundanimation () {
+      var RGB_R = "7F";
+      var RGB_G = "7F";
+      var RGB_B = "7F";
+      var Z_Index = 1;
+      var S_Index = 1;
+      var Segment = 0;
+      var Linie;
+
+      while (true) {
+        if (Anzeigenbereichsänderung == 1) {
+          await AnzeigenbereichAnFensterAnpassen();
+          Anzeigenbereichsänderung = 0;
+        }
+
+        RGB_R = parseInt(Math.ceil(160 + Math.random() * 80)).toString(16).padStart(2, "0");
+        RGB_G = parseInt(Math.ceil(160 + Math.random() * 64)).toString(16).padStart(2, "0");
+        RGB_B = parseInt(Math.ceil(96 + Math.random() * 64)).toString(16).padStart(2, "0");
+
+        Z_Index = parseInt(Math.ceil(Math.random() * Zeilenanzahl));
+        S_Index = parseInt(Math.ceil(Math.random() * Spaltenanzahl));
+        Segment = parseInt(Math.floor(Math.random() * 3));
+        
+        Linie = document.getElementById("L" + Z_Index + "_" + S_Index + "_" + Segment);
+        Linie.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
+        // Linie.style.strokeOpacity = 0.618;
+        // Linie.style.strokeWidth = 1;
+
+        await Warte(50);
+      }
+    }
+
+    window.addEventListener("resize", AnzeigenbereichNeuBestimmen);
+    Hintergrundanimation();
+  ]]>
   </script>
 </svg>
-
