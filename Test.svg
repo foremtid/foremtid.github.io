@@ -1,8 +1,7 @@
 <svg xmlns    = "http://www.w3.org/2000/svg"
      id       = "Hintergrund"
      width    = "100%"
-     height   = "100%"
-     viewBox  = "0 0 100% 100%">
+     height   = "100%">
   <style>
     .Segmente {
       stroke:           #7f7f7f;
