@@ -4,6 +4,8 @@
      height   = "0"
      viewBox  = "0 0 0 0">
   <style>
+    #Hintergrund {background-color: #000000;}
+       
     .Segmente {
       stroke:           #7f7f7f;
       stroke-width:     0.618;
