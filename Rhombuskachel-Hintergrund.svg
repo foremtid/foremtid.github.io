@@ -1,12 +1,13 @@
 <svg xmlns    = "http://www.w3.org/2000/svg"
      id       = "Hintergrund"
-     width    = "100%"
-     height   = "100%">
+     width    = "0"
+     height   = "0"
+     viewBox  = "0 0 0 0">
   <style>
     .Segmente {
       stroke:           #7f7f7f;
       stroke-width:     0.618;
-      stroke-opacity:   0.982;
+      stroke-opacity:   0.618;
       stroke-linecap:   round;
       stroke-dasharray: 1, 1.62;
     }
@@ -33,6 +34,9 @@
     var Anzeigenbereichsänderung = 1;
 
     var Hintergrund = document.getElementById("Hintergrund");
+    //Hintergrund.setAttribute("width", window.innerWidth);
+    //Hintergrund.setAttribute("height", window.innerHeight);
+    //Hintergrund.setAttribute("viewBox", "0 0 " + window.innerWidth + " " + window.innerHeight);
 
 
 
@@ -94,6 +98,7 @@
 
 
     async function RasterAuffüllen() {
+      // console.log("RasterAuffüllen");
       if (Zeilenanzahl < Y_Rasterindexgrenze) {
         for (let Z = Zeilenanzahl + 1; Z <= Y_Rasterindexgrenze; Z++) {
           // Erzeuge erstes Strichlein…
@@ -123,6 +128,7 @@
 
 
     async function AnzeigenbereichAnFensterAnpassen() {
+      // console.log("AnzeigenbereichAnFensterAnpassen");
       // Raster auffüllen, falls die Fensterbreite die Rasterbreite oder die Fensterhöhe die Rasterhöhe überschreitet
       // Anzeigebereich einschränken, wenn der Fensterbereich kleiner als der Anzeigebereich wird
       X_Rasterindexgrenze = parseInt(Math.floor((window.innerWidth - X_Versatz) / Spaltenbreite));
@@ -136,15 +142,23 @@
 
 
     async function AnzeigenbereichNeuBestimmen() {
+      // console.log("AnzeigenbereichNeuBestimmen");
+      Hintergrund.setAttribute("width", window.innerWidth);
+      Hintergrund.setAttribute("height", window.innerHeight);
+      Hintergrund.setAttribute("viewBox", "0 0 " + window.innerWidth + " " + window.innerHeight);
       Anzeigenbereichsänderung = 1;
     }
+    AnzeigenbereichNeuBestimmen();
+    window.addEventListener("resize", AnzeigenbereichNeuBestimmen);
 
 
 
     async function Hintergrundanimation () {
+      // console.log("Hintergrundanimation");
+      await Warte(100);
       var RGB_R = "7F";
       var RGB_G = "7F";
-      var RGB_B = "7F";
+      var RGB_B = "7F";Z_Index
       var Z_Index = 1;
       var S_Index = 1;
       var Segment = 0;
@@ -156,24 +170,25 @@
           Anzeigenbereichsänderung = 0;
         }
 
-        RGB_R = parseInt(Math.ceil(160 + Math.random() * 80)).toString(16).padStart(2, "0");
-        RGB_G = parseInt(Math.ceil(160 + Math.random() * 64)).toString(16).padStart(2, "0");
-        RGB_B = parseInt(Math.ceil(96 + Math.random() * 64)).toString(16).padStart(2, "0");
+        RGB_R = parseInt(Math.ceil(128 + Math.random() * 96)).toString(16).padStart(2, "0");
+        RGB_G = parseInt(Math.ceil(112 + Math.random() * 80)).toString(16).padStart(2, "0");
+        RGB_B = parseInt(Math.ceil( 96 + Math.random() * 48)).toString(16).padStart(2, "0");
 
-        Z_Index = parseInt(Math.ceil(Math.random() * Zeilenanzahl));
-        S_Index = parseInt(Math.ceil(Math.random() * Spaltenanzahl));
+        Z_Index = parseInt(Math.ceil(0.1 + Math.random() * (Zeilenanzahl - 0.1)));
+        S_Index = parseInt(Math.ceil(0.1 + Math.random() * (Spaltenanzahl -0.1)));
         Segment = parseInt(Math.floor(Math.random() * 3));
-        
         Linie = document.getElementById("L" + Z_Index + "_" + S_Index + "_" + Segment);
-        Linie.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
-        // Linie.style.strokeOpacity = 0.618;
-        // Linie.style.strokeWidth = 1;
+        if (Linie !== null) {
+          Linie.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
+          // Linie.style.strokeOpacity = 0.618;
+          // Linie.style.strokeWidth = 1;
+        } else {
+          console.log ("L" + Z_Index + "_" + S_Index + "_" + Segment + " - " + Zeilenanzahl + " " + Spaltenanzahl);  
+        }
 
-        await Warte(50);
+        await Warte(100);
       }
     }
-
-    window.addEventListener("resize", AnzeigenbereichNeuBestimmen);
     Hintergrundanimation();
   ]]>
   </script>
