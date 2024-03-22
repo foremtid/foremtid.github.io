@@ -10,7 +10,7 @@
 
     .Segmente {
       stroke:           #7f7f7f;
-      stroke-width:     0.618;
+      stroke-width:     0.618px;
       stroke-opacity:   0.618;
       stroke-linecap:   round;
       stroke-dasharray: 1, 1.62;
@@ -38,7 +38,7 @@
     var Anzeigenbereichsänderung = 1;
 
     if (Streckfaktor > 1)
-      document.querySelector('.Segmente').style.setProperty('stroke-width', Streckfaktor * 0.618);
+      document.querySelector(".Segmente").style.setProperty("stroke-width", (Streckfaktor * 0.618) + "px");
 
     var Hintergrund = document.getElementById("Hintergrund");
     //Hintergrund.setAttribute("width", window.innerWidth);
