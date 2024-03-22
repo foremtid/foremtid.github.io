@@ -4,11 +4,13 @@
      height   = "0"
      viewBox  = "0 0 0 0">
   <style>
-    #Hintergrund {background-color: #000000;}
-       
+    #Hintergrund {
+      background-color: #000000;
+    }
+
     .Segmente {
       stroke:           #7f7f7f;
-      stroke-width:     1;
+      stroke-width:     0.618;
       stroke-opacity:   0.618;
       stroke-linecap:   round;
       stroke-dasharray: 1, 1.62;
@@ -34,6 +36,9 @@
     var X_Rasterindexgrenze      = 0;
     var Y_Rasterindexgrenze      = 0;
     var Anzeigenbereichsänderung = 1;
+
+    if (Streckfaktor > 1)
+      document.querySelector('.Segmente').style.setProperty('stroke-width', Streckfaktor * 0.618);
 
     var Hintergrund = document.getElementById("Hintergrund");
     //Hintergrund.setAttribute("width", window.innerWidth);
@@ -96,7 +101,7 @@
       }
       Hintergrund.appendChild(NeueLinie2);
     }
-    
+
 
 
     async function RasterAuffüllen() {
@@ -192,6 +197,15 @@
       }
     }
     Hintergrundanimation();
+    // Kurve(((sqrt(5) + 1)/2)² cos(2 Pi t) + ((sqrt(5) + 1)/2) cos(-3 Pi t), ((sqrt(5) + 1)/2)² sin(2 Pi t) + ((sqrt(5) + 1)/2) sin(-3 Pi t), t, -Pi, Pi)
+    // Kurve(((sqrt(5) + 1)/2) cos(2 Pi t) + ((sqrt(5) - 1)/2) cos(-3 Pi t), ((sqrt(5) + 1)/2) sin(2 Pi t) + ((sqrt(5) - 1)/2) sin(-3 Pi t), t, -Pi, Pi)
+    // Kurve(((sqrt(5) - 1)/2) cos(2 Pi t) + ((sqrt(5) - 1)/2)³ cos(-3 Pi t), ((sqrt(5) - 1)/2) sin(2 Pi t) + ((sqrt(5) - 1)/2)³ sin(-3 Pi t), t, -Pi, Pi)
+    // Kurve(cos(2 Pi t) + ((sqrt(5) - 1)/2) cos(-3 Pi t), sin(2 Pi t) + ((sqrt(5) - 1)/2) sin(-3 Pi t), t, -Pi, Pi)
+    //b=Kurve((((sqrt(5)+1)/(2)))^(2) cos(2 π t)+((sqrt(5)+1)/(2)) cos(-3 π t),(((sqrt(5)+1)/(2)))^(2) sin(2 π t)+((sqrt(5)+1)/(2)) sin(-3 π t),t,-((π)/(5.448)),((π)/(5.448)))
+    //d=Kurve(((1+sqrt(5))/(2)) cos(2 π t)+((sqrt(5)-1)/(2)) cos(-3 π t),((1+sqrt(5))/(2)) sin(2 π t)+((sqrt(5)-1)/(2)) sin(-3 π t),t,-((π)/(5.67)),((π)/(5.67)))
+    //a=Kurve(((1+sqrt(5))/(2)) cos(2 π t)+((sqrt(5)-1)/(2)) cos(-3 π t),((1+sqrt(5))/(2)) sin(2 π t)+((sqrt(5)-1)/(2)) sin(-3 π t),t,((π)/(17)),((π)/(5.67)))
+    //c=Kurve(cos(2 π t)+((sqrt(5)-1)/(2)) cos(-3 π t),sin(2 π t)+((sqrt(5)-1)/(2)) sin(-3 π t),t,-π,π)
+    //f=Kurve(((sqrt(5)-1)/(2)) cos(2 π t)+(((sqrt(5)-1)/(2)))^(3) cos(-3 π t),((sqrt(5)-1)/(2)) sin(2 π t)+(((sqrt(5)-1)/(2)))^(3) sin(-3 π t),t,-π,π)
   ]]>
   </script>
 </svg>
