@@ -8,7 +8,7 @@
        
     .Segmente {
       stroke:           #7f7f7f;
-      stroke-width:     0.618;
+      stroke-width:     1;
       stroke-opacity:   0.618;
       stroke-linecap:   round;
       stroke-dasharray: 1, 1.62;
