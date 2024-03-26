@@ -17,13 +17,18 @@
     }
   </style>
   <script type="text/javascript">
-  <![CDATA[ document.addEventListener('DOMContentLoaded', function() {
+  <![CDATA[
+  document.addEventListener('DOMContentLoaded', function() {
     var X_Versatz       = 3.5;
     var Y_Versatz       = 3.0;
+
+
+
     var Streckfaktor    = window.devicePixelRatio;
     var Segmentlänge    = (1 + 4 * (1.62 + 1)) * Streckfaktor;
     var Spaltenbreite   = Segmentlänge * Math.cos(Math.PI / 6);
     var Zeilenhöhe      = Segmentlänge * 1.5;
+
     var AbstandslückeS  = (8 - 4 * Math.sqrt(3)) * Streckfaktor;
     var AbstandslückeDX = AbstandslückeS * Math.cos(Math.PI / 6);
     var AbstandslückeDY = AbstandslückeS * Math.sin(Math.PI / 6);
@@ -35,18 +40,16 @@
 
     var X_Rasterindexgrenze      = 0;
     var Y_Rasterindexgrenze      = 0;
-    var Anzeigenbereichsänderung = 1;
+
+    var Hintergrund = document.getElementById("Hintergrund");
+
+
 
     if (Streckfaktor > 1){
       const Darstellungsdefinitionen = document.querySelector("style");
       const SegmenteIndex = [...Darstellungsdefinitionen.sheet.cssRules].findIndex(Regel => Regel.selectorText === ".Segmente");
       Darstellungsdefinitionen.sheet.cssRules[SegmenteIndex].style.setProperty("stroke-width", (Streckfaktor * 0.618));
     }
-
-    var Hintergrund = document.getElementById("Hintergrund");
-    //Hintergrund.setAttribute("width", window.innerWidth);
-    //Hintergrund.setAttribute("height", window.innerHeight);
-    //Hintergrund.setAttribute("viewBox", "0 0 " + window.innerWidth + " " + window.innerHeight);
 
 
 
@@ -70,6 +73,11 @@
         NeueLinie.setAttributeNS(null, "y2", Y_Versatz + (Z - 1) * Zeilenhöhe - AbstandslückeS + Segmentlänge);
       }
 
+      var RGB_R = parseInt(111 + Math.floor(Math.random() * 33)).toString(16).padStart(2, "0");
+      var RGB_G = parseInt( 95 + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+      var RGB_B = parseInt( 63 + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+      NeueLinie.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
+
       Hintergrund.appendChild(NeueLinie);
     }
 
@@ -77,10 +85,12 @@
 
     async function D_SegmenteErstellen(Z, S) {
       var NeueLinie1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
       NeueLinie1.setAttributeNS(null, "id", "L" + Z + "_" + S + "_0");
       NeueLinie1.setAttributeNS(null, "class", "Segmente");
       NeueLinie1.setAttributeNS(null, "x1", X_Versatz + AbstandslückeDX + Spaltenbreite * (S - 1));
       NeueLinie1.setAttributeNS(null, "x2", X_Versatz - AbstandslückeDX + Spaltenbreite * S);
+
       if ((Z % 2 == 1 && S % 2 == 1) || (Z % 2 == 0 && S % 2 == 0)) {
         NeueLinie1.setAttributeNS(null, "y1", Y_Versatz - AbstandslückeDY + Zeilenhöhe * Z - Segmentlänge);
         NeueLinie1.setAttributeNS(null, "y2", Y_Versatz + AbstandslückeDY + Zeilenhöhe * (Z - 1));
@@ -88,13 +98,22 @@
         NeueLinie1.setAttributeNS(null, "y1", Y_Versatz + AbstandslückeDY + Zeilenhöhe * (Z - 1));
         NeueLinie1.setAttributeNS(null, "y2", Y_Versatz - AbstandslückeDY + Zeilenhöhe * Z - Segmentlänge);
       }
+
+      var RGB_R = parseInt(111 + Math.floor(Math.random() * 33)).toString(16).padStart(2, "0");
+      var RGB_G = parseInt( 95 + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+      var RGB_B = parseInt( 63 + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+      NeueLinie1.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
+
       Hintergrund.appendChild(NeueLinie1);
-      
+
+
       var NeueLinie2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
       NeueLinie2.setAttributeNS(null, "id", "L" + Z + "_" + S + "_2");
       NeueLinie2.setAttributeNS(null, "class", "Segmente");
       NeueLinie2.setAttributeNS(null, "x1", X_Versatz + AbstandslückeDX + Spaltenbreite * (S - 1));
       NeueLinie2.setAttributeNS(null, "x2", X_Versatz - AbstandslückeDX + Spaltenbreite * S);
+
       if ((Z % 2 == 1 && S % 2 == 1) || (Z % 2 == 0 && S % 2 == 0)) {
         NeueLinie2.setAttributeNS(null, "y1", Y_Versatz - AbstandslückeDY + Zeilenhöhe * Z);
         NeueLinie2.setAttributeNS(null, "y2", Y_Versatz + AbstandslückeDY + Zeilenhöhe * (Z - 1) + Segmentlänge);
@@ -102,13 +121,18 @@
         NeueLinie2.setAttributeNS(null, "y1", Y_Versatz + AbstandslückeDY + Zeilenhöhe * (Z - 1) + Segmentlänge);
         NeueLinie2.setAttributeNS(null, "y2", Y_Versatz - AbstandslückeDY + Zeilenhöhe * Z);
       }
+
+      var RGB_R = parseInt(111 + Math.floor(Math.random() * 33)).toString(16).padStart(2, "0");
+      var RGB_G = parseInt( 95 + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+      var RGB_B = parseInt( 63 + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+      NeueLinie2.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
+
       Hintergrund.appendChild(NeueLinie2);
     }
 
 
 
     async function RasterAuffüllen() {
-      // console.log("RasterAuffüllen");
       if (Zeilenanzahl < Y_Rasterindexgrenze) {
         for (let Z = Zeilenanzahl + 1; Z <= Y_Rasterindexgrenze; Z++) {
           // Erzeuge erstes Strichlein…
@@ -137,78 +161,264 @@
 
 
 
+    async function RasterBereinigen() {
+      var Segment;
+      if (Spaltenanzahl > X_Rasterindexgrenze) {
+        for (let Z = 1; Z <= Zeilenanzahl; Z++) {
+          for (let S = (X_Rasterindexgrenze + 1); S <= Spaltenanzahl; S++) {
+            for (let I = 0; I <= 2; I++) {
+              Segment = document.getElementById("L" + Z + "_" + S + "_" + I);
+              if (Segment)
+                Segment.remove();
+              else 
+                console.log("Warnung 4");
+            }
+          }
+        }
+        Spaltenanzahl = X_Rasterindexgrenze;
+      }
+
+      if (Zeilenanzahl > Y_Rasterindexgrenze) {
+        for (let Z = (Y_Rasterindexgrenze + 1); Z <= Zeilenanzahl; Z++) {
+          Segment = document.getElementById("L" + Z + "_0_1");
+          if (Segment)
+            Segment.remove();
+          else
+            console.log("Warnung 5");
+          for (let S = 1; S <= Spaltenanzahl; S++) {
+            for (let I = 0; I <= 2; I++) {
+              Segment = document.getElementById("L" + Z + "_" + S + "_" + I);
+              if (Segment)
+                Segment.remove();
+              else
+                console.log("Warnung 6");
+            }
+          }
+        }
+        Zeilenanzahl = Y_Rasterindexgrenze;
+      }
+    }
+
+
+
     async function AnzeigenbereichAnFensterAnpassen() {
-      // console.log("AnzeigenbereichAnFensterAnpassen");
-      // Raster auffüllen, falls die Fensterbreite die Rasterbreite oder die Fensterhöhe die Rasterhöhe überschreitet
-      // Anzeigebereich einschränken, wenn der Fensterbereich kleiner als der Anzeigebereich wird
+      // Raster auffüllen, falls die Fensterbreite die Rasterbreite oder die Fensterhöhe die Rasterhöhe erreicht
+      // Anzeigebereich einschränken, wenn der Fensterbereich kleiner als der Anzeigebereich wird, Raster verkleinern
+      Hintergrund.setAttribute("width", window.innerWidth);
+      Hintergrund.setAttribute("height", window.innerHeight);
+      Hintergrund.setAttribute("viewBox", "0 0 " + window.innerWidth + " " + window.innerHeight);
+
       X_Rasterindexgrenze = parseInt(Math.floor((window.innerWidth - X_Versatz) / Spaltenbreite));
       Y_Rasterindexgrenze = parseInt(Math.floor((window.innerHeight - Y_Versatz) / Zeilenhöhe));
 
       if (Y_Rasterindexgrenze > Zeilenanzahl ||
           X_Rasterindexgrenze > Spaltenanzahl)
         await RasterAuffüllen();
+
+      if (Y_Rasterindexgrenze < Zeilenanzahl ||
+          X_Rasterindexgrenze < Spaltenanzahl)
+        await RasterBereinigen();
     }
+    AnzeigenbereichAnFensterAnpassen();
 
 
 
-    async function AnzeigenbereichNeuBestimmen() {
-      // console.log("AnzeigenbereichNeuBestimmen");
+    var Anzeigenbereichsänderung = 0;
+    function AnzeigenbereichNeuBestimmen() {
       Hintergrund.setAttribute("width", window.innerWidth);
       Hintergrund.setAttribute("height", window.innerHeight);
       Hintergrund.setAttribute("viewBox", "0 0 " + window.innerWidth + " " + window.innerHeight);
+
       Anzeigenbereichsänderung = 1;
     }
-    AnzeigenbereichNeuBestimmen();
     window.addEventListener("resize", AnzeigenbereichNeuBestimmen);
 
 
 
-    async function Hintergrundanimation () {
-      // console.log("Hintergrundanimation");
-      await Warte(100);
-      var RGB_R = "7F";
-      var RGB_G = "7F";
-      var RGB_B = "7F";Z_Index
-      var Z_Index = 1;
-      var S_Index = 1;
-      var Segment = 0;
-      var Linie;
+    async function Anzeigenwächter() {
+      while (true) {
+        await Warte(1000);
+        if (Anzeigenbereichsänderung != 1) continue;
+        
+        Anzeigenbereichsänderung = 0;
+        await AnzeigenbereichAnFensterAnpassen();
+      }
+    }
+    Anzeigenwächter();
+
+
+
+    async function H(t, A, L) {
+      return A / (1 + Math.exp(Math.log(A - 1) * (L - 2 * t) / L));
+    }
+
+    async function Animationsschritt (Spalte, Zeile, Länge, Schritt) {
+      var RGB_R;
+      var RGB_G;
+      var RGB_B;
+      
+      var Index;
+      var Segment;
+      
+      if (Länge == 0 || Schritt > Länge) {
+        RGB_R = parseInt(111 + Math.floor(Math.random() * 33)).toString(16).padStart(2, "0");
+        RGB_G = parseInt( 95 + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+        RGB_B = parseInt( 63 + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+        
+        Index = parseInt(Math.floor(Math.random() * 3));
+        
+        Segment = document.getElementById("L" + Zeile + "_" + Spalte + "_" + Index);
+        if (Segment)
+          Segment.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
+        else
+          console.log("Warnung 1");
+      } else {
+        for (let Z = Zeile; Z >= Zeile - Schritt; Z--) {
+          if (Z < 1 || Z > Y_Rasterindexgrenze) continue;
+          for (let I = 0; I <= 2; I ++) {
+            RGB_R = parseInt(224
+                             - await H(Schritt + Zeile - Z, 113, Länge)
+                             + Math.floor(Math.random() * 33)).toString(16).padStart(2, "0");
+            RGB_G = parseInt(192
+                             - await H(Schritt + Zeile - Z, 97, Länge)
+                             + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+            RGB_B = parseInt(192
+                             - await H(Schritt + Zeile - Z, 129, Länge)
+                             + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+
+            Segment = document.getElementById("L" + Z + "_" + Spalte + "_" + I);
+            if (Segment)
+              Segment.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
+            else
+              console.log("Warnung 2");
+          }
+          
+          RGB_R = parseInt(224
+                           - await H(Schritt + Zeile - Z, 113, Länge)
+                           + Math.floor(Math.random() * 33)).toString(16).padStart(2, "0");
+          RGB_G = parseInt(192
+                           - await H(Schritt + Zeile - Z, 97, Länge)
+                           + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+          RGB_B = parseInt(192
+                           - await H(Schritt + Zeile - Z, 129, Länge)
+                           + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+
+          Segment = document.getElementById("L" + Z + "_" + (Spalte - 1) + "_1");
+          if (Segment)
+            Segment.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
+          else
+            console.log("Warnung 3");
+        }
+      } 
+    }
+
+
+
+    async function SegmentAufhellenOderVerdunkeln (Z, S, I, H) {
+      var RGB_R;
+      var RGB_G;
+      var RGB_B;
+
+      if (H == 0) {
+        RGB_R = parseInt(111 + Math.floor(Math.random() * 33)).toString(16).padStart(2, "0");
+        RGB_G = parseInt( 95 + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+        RGB_B = parseInt( 63 + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+      } else {
+        RGB_R = parseInt(223 + Math.floor(Math.random() * 33)).toString(16).padStart(2, "0");
+        RGB_G = parseInt(191 + Math.floor(Math.random() * 65)).toString(16).padStart(2, "0");
+        RGB_B = parseInt(127 + Math.floor(Math.random() * 97)).toString(16).padStart(2, "0");
+      }
+
+      var Segment = document.getElementById("L" + Z + "_" + S + "_" + I);
+      if (Segment)
+        Segment.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
+      else
+        console.log("Warnung 7");
+    }
+
+
+
+    var Aktionen = [];
+    async function AktionenHinzufügen() {
+      var Aktion = [];
+      var Einfügeposition;
+      var Z;
+      var S;
+      var I;
+      var L;
+      var SI;
+      var AktionsNr = parseInt(1 + Math.floor(Math.random() * 2));
+
+      switch (AktionsNr) {
+        case 1:
+          Z = parseInt(1 + Math.floor(Math.random() * Y_Rasterindexgrenze));
+          S = parseInt(1 + Math.floor(Math.random() * X_Rasterindexgrenze));
+          I = parseInt(    Math.floor(Math.random() * 3));
+
+          Einfügeposition = parseInt(Math.floor(Math.random() * (Aktionen.length + 1)));
+          Aktion = [AktionsNr, Z, S, I, 1];
+          Aktionen.splice(Einfügeposition, 0, Aktion);
+
+          Einfügeposition += 1 + parseInt(Math.floor(Math.random() * (Aktionen.length - Einfügeposition)));
+          Aktion = [AktionsNr, Z, S, I, 0];
+          Aktionen.splice(Einfügeposition, 0, Aktion);
+          break;
+
+        case 2:
+          S = parseInt(1 + Math.floor(Math.random() * X_Rasterindexgrenze));
+          Z = parseInt(Math.floor(1 + Math.random() * Y_Rasterindexgrenze / 1.618));
+          L = parseInt(Math.floor(2 + Math.random() * Zeilenanzahl / 1.618));
+          SI = 0;
+
+          Einfügeposition = parseInt(Math.floor(Math.random() * (Aktionen.length + 1)));
+          Aktion = [AktionsNr, S, Z, L, SI];
+          Aktionen.splice(Einfügeposition, 0, Aktion);
+
+          while (SI <= L) {
+            Einfügeposition += 1 + parseInt(Math.floor(Math.random() * (Aktionen.length - Einfügeposition)));
+            Z++;
+            SI++; // += parseInt(Math.round(Math.random()));
+
+            Aktion = [AktionsNr, S, Z, L, SI];
+            Aktionen.splice(Einfügeposition, 0, Aktion);
+          }
+          break;
+
+        default:
+          console.log("Warnung 8");
+      }
+    }
+
+
+
+    async function Hintergrundanimation() {
+      var AktionsNr;
+      var Aktion;
 
       while (true) {
-        if (Anzeigenbereichsänderung == 1) {
-          await AnzeigenbereichAnFensterAnpassen();
-          Anzeigenbereichsänderung = 0;
+        if (Aktionen.length < X_Rasterindexgrenze * Y_Rasterindexgrenze / 2.618 ) { //6.854) {
+          AktionsNr = parseInt(Math.round(1 + Math.random()));
+          await AktionenHinzufügen(AktionsNr);
         }
-
-        RGB_R = parseInt(Math.ceil(128 + Math.random() * 96)).toString(16).padStart(2, "0");
-        RGB_G = parseInt(Math.ceil(112 + Math.random() * 80)).toString(16).padStart(2, "0");
-        RGB_B = parseInt(Math.ceil( 96 + Math.random() * 48)).toString(16).padStart(2, "0");
-
-        Z_Index = parseInt(Math.ceil(0.1 + Math.random() * (Zeilenanzahl - 0.1)));
-        S_Index = parseInt(Math.ceil(0.1 + Math.random() * (Spaltenanzahl -0.1)));
-        Segment = parseInt(Math.floor(Math.random() * 3));
-        Linie = document.getElementById("L" + Z_Index + "_" + S_Index + "_" + Segment);
-        if (Linie !== null) {
-          Linie.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
-          // Linie.style.strokeOpacity = 0.618;
-          // Linie.style.strokeWidth = 1;
-        } else {
-          console.log ("L" + Z_Index + "_" + S_Index + "_" + Segment + " - " + Zeilenanzahl + " " + Spaltenanzahl);  
+        
+        Aktion = Aktionen.shift();
+        switch (Aktion[0]) {
+          case 1:
+            await SegmentAufhellenOderVerdunkeln(Aktion[1], Aktion[2], Aktion[3], Aktion[4]);
+            break;
+            
+          case 2:
+            await Animationsschritt(Aktion[1], Aktion[2], Aktion[3], Aktion[4]);
+            break;
+          
+          default:
+            console.log("Warnung 9");
         }
-
-        await Warte(100);
+        await Warte (25);
       }
     }
     Hintergrundanimation();
-    // Kurve(((sqrt(5) + 1)/2)² cos(2 Pi t) + ((sqrt(5) + 1)/2) cos(-3 Pi t), ((sqrt(5) + 1)/2)² sin(2 Pi t) + ((sqrt(5) + 1)/2) sin(-3 Pi t), t, -Pi, Pi)
-    // Kurve(((sqrt(5) + 1)/2) cos(2 Pi t) + ((sqrt(5) - 1)/2) cos(-3 Pi t), ((sqrt(5) + 1)/2) sin(2 Pi t) + ((sqrt(5) - 1)/2) sin(-3 Pi t), t, -Pi, Pi)
-    // Kurve(((sqrt(5) - 1)/2) cos(2 Pi t) + ((sqrt(5) - 1)/2)³ cos(-3 Pi t), ((sqrt(5) - 1)/2) sin(2 Pi t) + ((sqrt(5) - 1)/2)³ sin(-3 Pi t), t, -Pi, Pi)
-    // Kurve(cos(2 Pi t) + ((sqrt(5) - 1)/2) cos(-3 Pi t), sin(2 Pi t) + ((sqrt(5) - 1)/2) sin(-3 Pi t), t, -Pi, Pi)
-    //b=Kurve((((sqrt(5)+1)/(2)))^(2) cos(2 π t)+((sqrt(5)+1)/(2)) cos(-3 π t),(((sqrt(5)+1)/(2)))^(2) sin(2 π t)+((sqrt(5)+1)/(2)) sin(-3 π t),t,-((π)/(5.448)),((π)/(5.448)))
-    //d=Kurve(((1+sqrt(5))/(2)) cos(2 π t)+((sqrt(5)-1)/(2)) cos(-3 π t),((1+sqrt(5))/(2)) sin(2 π t)+((sqrt(5)-1)/(2)) sin(-3 π t),t,-((π)/(5.67)),((π)/(5.67)))
-    //a=Kurve(((1+sqrt(5))/(2)) cos(2 π t)+((sqrt(5)-1)/(2)) cos(-3 π t),((1+sqrt(5))/(2)) sin(2 π t)+((sqrt(5)-1)/(2)) sin(-3 π t),t,((π)/(17)),((π)/(5.67)))
-    //c=Kurve(cos(2 π t)+((sqrt(5)-1)/(2)) cos(-3 π t),sin(2 π t)+((sqrt(5)-1)/(2)) sin(-3 π t),t,-π,π)
-    //f=Kurve(((sqrt(5)-1)/(2)) cos(2 π t)+(((sqrt(5)-1)/(2)))^(3) cos(-3 π t),((sqrt(5)-1)/(2)) sin(2 π t)+(((sqrt(5)-1)/(2)))^(3) sin(-3 π t),t,-π,π)
-  }); ]]>
+  });
+  ]]>
   </script>
 </svg>
