@@ -396,7 +396,7 @@
       var Aktion;
 
       while (true) {
-        if (Aktionen.length < X_Rasterindexgrenze * Y_Rasterindexgrenze / 4.236) { // 2.618 ) { //6.854) {
+        if (Aktionen.length < X_Rasterindexgrenze * Y_Rasterindexgrenze / 6.854) { // 4.236) { // 2.618 ) { //
           AktionsNr = parseInt(Math.round(1 + Math.random()));
           await AktionenHinzufügen(AktionsNr);
         }
