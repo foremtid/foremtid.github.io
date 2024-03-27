@@ -351,11 +351,12 @@
       switch (AktionsNr) {
         case 1:
         case 2:
+        case 3:
           Z = parseInt(1 + Math.floor(Math.random() * Y_Rasterindexgrenze));
           S = parseInt(1 + Math.floor(Math.random() * X_Rasterindexgrenze));
           I = parseInt(    Math.floor(Math.random() * 3));
 
-          Einfügeposition = parseInt(Math.floor(Math.random() * (Aktionen.length + 1)));
+          Einfügeposition = parseInt(Math.floor(Math.floor(Aktionen.length / 3) + Math.random() * (Math.floor(Aktionen.length / 2) + 1)));
           Aktion = [AktionsNr, Z, S, I, 1];
           Aktionen.splice(Einfügeposition, 0, Aktion);
 
@@ -364,7 +365,6 @@
           Aktionen.splice(Einfügeposition, 0, Aktion);
           break;
 
-        case 3:
         case 4:
         case 5:
           S = parseInt(1 + Math.floor(Math.random() * X_Rasterindexgrenze));
@@ -372,7 +372,7 @@
           L = parseInt(Math.floor(2 + Math.random() * Zeilenanzahl / 1.618));
           SI = 0;
 
-          Einfügeposition = parseInt(Math.floor(Math.random() * (Aktionen.length + 1)));
+          Einfügeposition = parseInt(Math.floor(Math.floor(Aktionen.length / 3) + Math.random() * (Math.floor(Aktionen.length / 2) + 1)));
           Aktion = [AktionsNr, S, Z, L, SI];
           Aktionen.splice(Einfügeposition, 0, Aktion);
 
@@ -398,9 +398,9 @@
       var Aktion;
 
       while (true) {
-        if (Aktionen.length < Math.sqrt(X_Rasterindexgrenze * Y_Rasterindexgrenze) / 1.618) { 
+        if (Aktionen.length < Math.sqrt(X_Rasterindexgrenze * Y_Rasterindexgrenze) / 2.618) { 
         // / 6.854) { // / 4.236) { // / 2.618 ) {
-          AktionsNr = parseInt(1 + Math.floor(Math.random() *5));
+          AktionsNr = parseInt(1 + Math.floor(Math.random() * 5));
           await AktionenHinzufügen(AktionsNr);
         }
         
@@ -408,19 +408,19 @@
         switch (Aktion[0]) {
           case 1:
           case 2:
+          case 3:
             await SegmentAufhellenOderVerdunkeln(Aktion[1], Aktion[2], Aktion[3], Aktion[4]);
             break;
-            
-          case 3:
+
           case 4:
           case 5:
             await Animationsschritt(Aktion[1], Aktion[2], Aktion[3], Aktion[4]);
             break;
-          
+
           default:
             // console.log("Warnung 9");
         }
-        await Warte (60);
+        await Warte (100);
       }
     }
     Hintergrundanimation();
