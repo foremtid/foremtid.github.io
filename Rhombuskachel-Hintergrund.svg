@@ -18,9 +18,10 @@
   </style>
   <script type="text/javascript">
   <![CDATA[
+  // Führe das Skript erst aus, wenn die Datei komplett geladen wurde…
   document.addEventListener('DOMContentLoaded', function() {
     var Streckfaktor    = Math.sqrt(window.devicePixelRatio) * window.devicePixelRatio;
-    var Segmentlänge    = (1 + 4 * (1.62 + 1)) * Streckfaktor;
+    var Segmentlänge    = 11.5 * Streckfaktor;
     var Spaltenbreite   = Segmentlänge * Math.cos(Math.PI / 6);
     var Zeilenhöhe      = Segmentlänge * 1.5;
 
@@ -46,8 +47,13 @@
 
 
     if (Streckfaktor > 1){
+      // Auswählen des ersten (und hier einzigen) <style>-Elements der Datei
       const Darstellungsdefinitionen = document.querySelector("style");
+      // Das CSSStyleSheet-Objekt mit der Liste der CSS-Regeln des <style>-Elements auswählen
+      // Der „Spread-Operator“ (...) konvertiert die Liste in ein Array
+      // Geben den Index der gesuchten CSS-Regel („.Segmente“) als Rückgabewert zurück
       const SegmenteIndex = [...Darstellungsdefinitionen.sheet.cssRules].findIndex(Regel => Regel.selectorText === ".Segmente");
+      // Passe die Strichbreite für Bildschirme mit größerer Pixeldichte (z.B. Mobiltelefone) an.
       Darstellungsdefinitionen.sheet.cssRules[SegmenteIndex].style.setProperty("stroke-width", (Streckfaktor * 0.618));
     }
 
@@ -170,8 +176,6 @@
               Segment = document.getElementById("L" + Z + "_" + S + "_" + I);
               if (Segment)
                 Segment.remove();
-              // else 
-                // console.log("Warnung 4");
             }
           }
         }
@@ -183,15 +187,11 @@
           Segment = document.getElementById("L" + Z + "_0_1");
           if (Segment)
             Segment.remove();
-          // else
-            // console.log("Warnung 5");
           for (let S = 1; S <= Spaltenanzahl; S++) {
             for (let I = 0; I <= 2; I++) {
               Segment = document.getElementById("L" + Z + "_" + S + "_" + I);
               if (Segment)
                 Segment.remove();
-              // else
-                // console.log("Warnung 6");
             }
           }
         }
@@ -248,6 +248,8 @@
 
 
 
+    // Hilfs-Wachstumsfunktion die bei 1 beginnt und 
+    // die Höhe (A - 1) ungefähr nach L Schritten erreicht
     async function H(t, A, L) {
       return A / (1 + Math.exp(Math.log(A - 1) * (L - 2 * t) / L));
     }
@@ -270,8 +272,6 @@
         Segment = document.getElementById("L" + Zeile + "_" + Spalte + "_" + Index);
         if (Segment)
           Segment.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
-        // else
-          // console.log("Warnung 1");
       } else {
         for (let Z = Zeile; Z >= Zeile - Schritt; Z--) {
           if (Z < 1 || Z > Y_Rasterindexgrenze) continue;
@@ -289,8 +289,6 @@
             Segment = document.getElementById("L" + Z + "_" + Spalte + "_" + I);
             if (Segment)
               Segment.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
-            // else
-              // console.log("Warnung 2");
           }
           
           RGB_R = parseInt(224
@@ -306,8 +304,6 @@
           Segment = document.getElementById("L" + Z + "_" + (Spalte - 1) + "_1");
           if (Segment)
             Segment.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
-          // else
-            // console.log("Warnung 3");
         }
       } 
     }
@@ -332,8 +328,6 @@
       var Segment = document.getElementById("L" + Z + "_" + S + "_" + I);
       if (Segment)
         Segment.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
-      // else
-        // console.log("Warnung 7");
     }
 
 
@@ -355,7 +349,8 @@
           S = parseInt(1 + Math.floor(Math.random() * X_Rasterindexgrenze));
           I = parseInt(    Math.floor(Math.random() * 3));
 
-          Einfügeposition = parseInt(Math.floor(Math.floor(Aktionen.length / 2.618) + Math.random() * (Math.floor(Aktionen.length / 1.618) + 1)));
+          Einfügeposition = parseInt(Math.floor(Math.floor(Aktionen.length / 2.618)
+                            + Math.random() * (Math.floor(Aktionen.length / 1.618) + 1)));
           Aktion = [AktionsNr, Z, S, I, 1];
           Aktionen.splice(Einfügeposition, 0, Aktion);
 
@@ -372,7 +367,8 @@
           L = parseInt(Math.floor(2 + Math.random() * Zeilenanzahl / 1.618));
           SI = 0;
 
-          Einfügeposition = parseInt(Math.floor(Math.floor(Aktionen.length / 1.618) + Math.random() * (Math.floor(Aktionen.length / 1.618) + 1)));
+          Einfügeposition = parseInt(Math.floor(Math.floor(Aktionen.length / 1.618)
+                            + Math.random() * (Math.floor(Aktionen.length / 1.618) + 1)));
           Aktion = [AktionsNr, S, Z, L, SI];
           Aktionen.splice(Einfügeposition, 0, Aktion);
 
@@ -387,7 +383,6 @@
           break;
 
         default:
-          // console.log("Warnung 8");
       }
     }
 
@@ -418,7 +413,6 @@
             break;
 
           default:
-            // console.log("Warnung 9");
         }
         await Warte (100);
       }
