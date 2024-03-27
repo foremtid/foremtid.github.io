@@ -24,8 +24,10 @@
     var Spaltenbreite   = Segmentlänge * Math.cos(Math.PI / 6);
     var Zeilenhöhe      = Segmentlänge * 1.5;
 
-    var Y_Versatz       = Math.floor((window.innerHeight - Zeilenhöhe * Math.floor(window.innerHeight / Zeilenhöhe)) / 2);
-    var X_Versatz       = Math.floor((window.innerWidth - Spaltenbreite * Math.floor(window.innerWidth / Spaltenbreite)) / 2);
+    var Y_Versatz       = Math.floor((window.innerHeight
+                          - Zeilenhöhe * Math.floor(window.innerHeight / Zeilenhöhe)) / 2);
+    var X_Versatz       = Math.floor((window.innerWidth
+                          - Spaltenbreite * Math.floor(window.innerWidth / Spaltenbreite)) / 2);
 
     var AbstandslückeS  = (8 - 4 * Math.sqrt(3)) * Streckfaktor;
     var AbstandslückeDX = AbstandslückeS * Math.cos(Math.PI / 6);
