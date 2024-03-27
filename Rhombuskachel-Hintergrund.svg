@@ -375,7 +375,7 @@
           while (SI <= L) {
             Einfügeposition += 1 + parseInt(Math.floor(Math.random() * (Aktionen.length - Einfügeposition)));
             Z++;
-            SI++; // += parseInt(Math.round(Math.random()));
+            SI++;
 
             Aktion = [AktionsNr, S, Z, L, SI];
             Aktionen.splice(Einfügeposition, 0, Aktion);
