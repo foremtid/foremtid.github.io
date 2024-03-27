@@ -170,8 +170,8 @@
               Segment = document.getElementById("L" + Z + "_" + S + "_" + I);
               if (Segment)
                 Segment.remove();
-              else 
-                console.log("Warnung 4");
+              // else 
+                // console.log("Warnung 4");
             }
           }
         }
@@ -183,15 +183,15 @@
           Segment = document.getElementById("L" + Z + "_0_1");
           if (Segment)
             Segment.remove();
-          else
-            console.log("Warnung 5");
+          // else
+            // console.log("Warnung 5");
           for (let S = 1; S <= Spaltenanzahl; S++) {
             for (let I = 0; I <= 2; I++) {
               Segment = document.getElementById("L" + Z + "_" + S + "_" + I);
               if (Segment)
                 Segment.remove();
-              else
-                console.log("Warnung 6");
+              // else
+                // console.log("Warnung 6");
             }
           }
         }
@@ -270,8 +270,8 @@
         Segment = document.getElementById("L" + Zeile + "_" + Spalte + "_" + Index);
         if (Segment)
           Segment.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
-        else
-          console.log("Warnung 1");
+        // else
+          // console.log("Warnung 1");
       } else {
         for (let Z = Zeile; Z >= Zeile - Schritt; Z--) {
           if (Z < 1 || Z > Y_Rasterindexgrenze) continue;
@@ -289,8 +289,8 @@
             Segment = document.getElementById("L" + Z + "_" + Spalte + "_" + I);
             if (Segment)
               Segment.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
-            else
-              console.log("Warnung 2");
+            // else
+              // console.log("Warnung 2");
           }
           
           RGB_R = parseInt(224
@@ -306,8 +306,8 @@
           Segment = document.getElementById("L" + Z + "_" + (Spalte - 1) + "_1");
           if (Segment)
             Segment.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
-          else
-            console.log("Warnung 3");
+          // else
+            // console.log("Warnung 3");
         }
       } 
     }
@@ -332,14 +332,14 @@
       var Segment = document.getElementById("L" + Z + "_" + S + "_" + I);
       if (Segment)
         Segment.style.stroke = "#" + RGB_R + RGB_G + RGB_B;
-      else
-        console.log("Warnung 7");
+      // else
+        // console.log("Warnung 7");
     }
 
 
 
     var Aktionen = [];
-    async function AktionenHinzufügen() {
+    async function AktionenHinzufügen(AktionsNr) {
       var Aktion = [];
       var Einfügeposition;
       var Z;
@@ -347,7 +347,6 @@
       var I;
       var L;
       var SI;
-      var AktionsNr = parseInt(1 + Math.floor(Math.random() * 2));
 
       switch (AktionsNr) {
         case 1:
@@ -388,7 +387,7 @@
           break;
 
         default:
-          console.log("Warnung 8");
+          // console.log("Warnung 8");
       }
     }
 
@@ -399,7 +398,8 @@
       var Aktion;
 
       while (true) {
-        if (Aktionen.length < X_Rasterindexgrenze * Y_Rasterindexgrenze / 6.854) { // 4.236) { // 2.618 ) { //
+        if (Aktionen.length < Math.sqrt(X_Rasterindexgrenze * Y_Rasterindexgrenze) / 1.618) { 
+        // / 6.854) { // / 4.236) { // / 2.618 ) {
           AktionsNr = parseInt(1 + Math.floor(Math.random() *5));
           await AktionenHinzufügen(AktionsNr);
         }
@@ -418,9 +418,9 @@
             break;
           
           default:
-            console.log("Warnung 9");
+            // console.log("Warnung 9");
         }
-        await Warte (35);
+        await Warte (60);
       }
     }
     Hintergrundanimation();
