@@ -351,6 +351,7 @@
 
       switch (AktionsNr) {
         case 1:
+        case 2:
           Z = parseInt(1 + Math.floor(Math.random() * Y_Rasterindexgrenze));
           S = parseInt(1 + Math.floor(Math.random() * X_Rasterindexgrenze));
           I = parseInt(    Math.floor(Math.random() * 3));
@@ -364,7 +365,9 @@
           Aktionen.splice(Einfügeposition, 0, Aktion);
           break;
 
-        case 2:
+        case 3:
+        case 4:
+        case 5:
           S = parseInt(1 + Math.floor(Math.random() * X_Rasterindexgrenze));
           Z = parseInt(Math.floor(1 + Math.random() * Y_Rasterindexgrenze / 1.618));
           L = parseInt(Math.floor(2 + Math.random() * Zeilenanzahl / 1.618));
@@ -404,10 +407,13 @@
         Aktion = Aktionen.shift();
         switch (Aktion[0]) {
           case 1:
+          case 2:
             await SegmentAufhellenOderVerdunkeln(Aktion[1], Aktion[2], Aktion[3], Aktion[4]);
             break;
             
-          case 2:
+          case 3:
+          case 4:
+          case 5:
             await Animationsschritt(Aktion[1], Aktion[2], Aktion[3], Aktion[4]);
             break;
           
