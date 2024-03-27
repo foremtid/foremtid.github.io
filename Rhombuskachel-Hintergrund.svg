@@ -19,7 +19,7 @@
   <script type="text/javascript">
   <![CDATA[
   document.addEventListener('DOMContentLoaded', function() {
-    var Streckfaktor    = Math.sqrt(window.devicePixelRatio);
+    var Streckfaktor    = Math.sqrt(window.devicePixelRatio) * window.devicePixelRatio;
     var Segmentlänge    = (1 + 4 * (1.62 + 1)) * Streckfaktor;
     var Spaltenbreite   = Segmentlänge * Math.cos(Math.PI / 6);
     var Zeilenhöhe      = Segmentlänge * 1.5;
