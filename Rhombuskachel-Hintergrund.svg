@@ -250,6 +250,10 @@
 
     // Hilfs-Wachstumsfunktion die bei 1 beginnt und 
     // die Höhe (A - 1) ungefähr nach L Schritten erreicht
+    // h(t) = a / (1 + exp(-bt + c))
+    // c    = log (a - 1)         <= h(0) = 1
+    // b    = 2 * log(a - 1) / S  <= h(S) = a - 1
+    // S    = L
     async function H(t, A, L) {
       return A / (1 + Math.exp(Math.log(A - 1) * (L - 2 * t) / L));
     }
