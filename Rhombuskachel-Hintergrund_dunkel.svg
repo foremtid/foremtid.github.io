@@ -13,7 +13,7 @@
     }
 
     .Segmente {
-      stroke:           #7f7f7f;
+      stroke:           #7F7F7F;
       stroke-width:     0.618px;
       stroke-opacity:   0.618;
       stroke-linecap:   round;
@@ -38,10 +38,12 @@
     var AbstandslückeDX = AbstandslückeS * Math.cos(Math.PI / 6);
     var AbstandslückeDY = AbstandslückeS * Math.sin(Math.PI / 6);
 
-    var Zeilenanzahl    = 0;
-    var Spaltenanzahl   = 0;
-    var Fensterhöhe     = 0;
-    var Fensterbreite   = 0;
+    var Zeilenanzahl     = 0;
+    var Spaltenanzahl    = 0;
+    var Breitenkontrolle = window.innerWidth;
+    var Höhenkontrolle   = window.innerHeight;
+    var Fensterbreite    = Breitenkontrolle;
+    var Fensterhöhe      = Höhenkontrolle;
 
     var X_Rasterindexgrenze      = 0;
     var Y_Rasterindexgrenze      = 0;
@@ -63,7 +65,14 @@
 
 
 
+    // Die Funktion „Warte“ akzeptiert eine Zeitangabe in Millisekunden als Parameter
+    // und simuliert eine asynchrone Operation, indem sie eine Verzögerung um die 
+    // übergebene Anzahl von Millisekunden verursacht.
     async function Warte(ms) {
+      // Der Rückgabewert ist ein Promise-Objekt
+      // Die setTimeout-Funktion wird verwendet, um eine Verzögerung zu verursachen
+      // Die resolve-Funktion wird als „Callback“ an setTimeout übergeben
+      // um das „Promise“ nach Ablauf der Zeit aufzulösen
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
@@ -205,15 +214,15 @@
 
 
 
-    async function AnzeigenbereichAnFensterAnpassen() {
+    async function AnzeigenbereichAnFensterAnpassen(NeueBreite, NeueHöhe) {
       // Raster auffüllen, falls die Fensterbreite die Rasterbreite oder die Fensterhöhe die Rasterhöhe erreicht
       // Anzeigebereich einschränken, wenn der Fensterbereich kleiner als der Anzeigebereich wird, Raster verkleinern
-      Hintergrund.setAttribute("width", window.innerWidth);
-      Hintergrund.setAttribute("height", window.innerHeight);
-      Hintergrund.setAttribute("viewBox", "0 0 " + window.innerWidth + " " + window.innerHeight);
+      Hintergrund.setAttribute("width", NeueBreite);
+      Hintergrund.setAttribute("height", NeueHöhe);
+      Hintergrund.setAttribute("viewBox", "0 0 " + NeueBreite + " " + NeueHöhe);
 
-      X_Rasterindexgrenze = parseInt(Math.floor((window.innerWidth - X_Versatz) / Spaltenbreite));
-      Y_Rasterindexgrenze = parseInt(Math.floor((window.innerHeight - Y_Versatz) / Zeilenhöhe));
+      X_Rasterindexgrenze = parseInt(Math.floor((NeueBreite - X_Versatz) / Spaltenbreite));
+      Y_Rasterindexgrenze = parseInt(Math.floor((NeueHöhe - Y_Versatz) / Zeilenhöhe));
 
       if (Y_Rasterindexgrenze > Zeilenanzahl ||
           X_Rasterindexgrenze > Spaltenanzahl)
@@ -222,30 +231,24 @@
       if (Y_Rasterindexgrenze < Zeilenanzahl ||
           X_Rasterindexgrenze < Spaltenanzahl)
         await RasterBereinigen();
+
+      Fensterbreite = NeueBreite;
+      Fensterhöhe   = NeueHöhe;
     }
-    AnzeigenbereichAnFensterAnpassen();
-
-
-
-    var Anzeigenbereichsänderung = 0;
-    function AnzeigenbereichNeuBestimmen() {
-      Hintergrund.setAttribute("width", window.innerWidth);
-      Hintergrund.setAttribute("height", window.innerHeight);
-      Hintergrund.setAttribute("viewBox", "0 0 " + window.innerWidth + " " + window.innerHeight);
-
-      Anzeigenbereichsänderung = 1;
-    }
-    window.addEventListener("resize", AnzeigenbereichNeuBestimmen);
+    AnzeigenbereichAnFensterAnpassen(Fensterbreite, Fensterhöhe);
 
 
 
     async function Anzeigenwächter() {
       while (true) {
         await Warte(1000);
-        if (Anzeigenbereichsänderung != 1) continue;
+
+        Breitenkontrolle = window.innerWidth;
+        Höhenkontrolle   = window.innerHeight;
+        if (Breitenkontrolle == Fensterbreite && Höhenkontrolle == Fensterhöhe)
+          continue;
         
-        Anzeigenbereichsänderung = 0;
-        await AnzeigenbereichAnFensterAnpassen();
+        await AnzeigenbereichAnFensterAnpassen(Breitenkontrolle, Höhenkontrolle);
       }
     }
     Anzeigenwächter();
