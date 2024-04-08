@@ -1,23 +1,78 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <style>
-    @media (prefers-color-scheme: dark) {
-      body {
-        background-color: black;
-        color: white;
-      }
-    }
-    @media (prefers-color-scheme: light) {
-      body {
-        background-color: white;
-        color: black;
-      }
-    }
-  </style>
-</head>
-<body>
-  <h1>Willkommen auf meiner Website!</h1>
-  <p>Ich hoffe, du hast eine gute Zeit hier.</p>
-</body>
+<html
+ lang="de">
+
+  <head>
+    <meta
+     charset = "UTF-8">
+    <meta
+     name    = "viewport"
+     content = "width=device-width, initial-scale=1.0">
+    <meta
+     name    = "description"
+     content = "MINT+ LNK+ Übungsaufgaben Lernprojekte">
+    <link
+     rel  = "icon"
+     href = "favicon.ico">
+    <link
+     id   = "AllgemeineDarstellungsregeln"
+     rel  = "stylesheet"  
+     href = "allgemein.css">
+    <link
+     id   = "SpezifischeDarstellungsregeln"
+     rel  = "stylesheet"  
+     href = "dunkel.css">
+    <script
+     src = "Hilfsfunktionen.js"
+     defer></script>
+    <script
+     src = "Kompass.js"
+     defer></script>
+    <title>Erste Schritte nach einer Linux-Standardinstallation</title>
+
+    <style>
+      .beau-rivage-regular {
+  font-family: "Beau Rivage", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+    </style>
+  </head>
+
+  <body>
+    <iframe
+     id    = "Hintergrund"
+     src   = "Rhombuskachel-Hintergrund_dunkel.svg"
+     style = "position:fixed; top:0; left:0;
+              height:100%; width:100%;
+              z-index:-1; border: none;">
+    </iframe>
+
+    <header
+     id    = "Kopfzeile"
+     style = "position: relative; min-height: 110px;
+              border: none; text-align: center; padding-left: 110px; padding-top: 15px; padding-right: 53px; margin-bottom: 16px;">
+
+      <h1 style="position: relative; margin-left: auto; margin-right: auto; margin-top:0px; display: block;" title="Sektion Mathematik, Ingenieurs- und Handwerkskunst, Naturwissenschaften, Technik und alles Andere, das im weitesten Sinne diesen Themenkomplexen zugeordnet werden kann">Sektion MINT<sub>+</sub></h1>
+      <ul style="display: inline; padding: 0px;">
+        <li style="display: inline;" title="Sektion Leben, Natur, Kultur und alles Weitere, das im weitesten Sinne diesen Themenkomplexen zugeordnet werden kann">Sektion LNK<sub>+</sub></li>
+        <li style="display: inline;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</li>
+        <li style="display: inline;" title="Sektion Lernprojekte und Übungsaufgaben">Sektion LP</li>
+      </ul>
+      <img src="Hell-Dunkel-Umschaltsymbol.png" onclick="Gestaltwandler()" style="position:absolute; top: 9px; right: 10px; height: 35px; width: auto;" />
+      <img src="Sektionen.png" onclick="Gestaltwandler()" style="position:absolute; top: 54px; right: 10px; height: 24.65px; width: auto;" />
+      <div onclick="Gestaltwandler()" style="position: absolute; right: 10px; top: 89px; border: 1.5px dashed #787878; box-shadow: 0px 0px 0px 1px rgba(127,127,127,0.6); border-radius: 42px; font-family: 'Beau Rivage', cursive; font-style: normal; color: #787878; font-size: 20px; font-kerning: normal;  text-shadow: 0.5px 0.5px 1px rgba(255,255,255,0.5); font-weight: 900; padding: 0px 15.4px 2px 12.4px;">i</div>
+    </header>
+
+    <nav>
+    </nav>
+
+    <article >
+      Info-Text… Alles noch im Aufbau…
+    </article>
+
+    <aside></aside>
+
+    <footer></footer>
+  </body>
 </html>
