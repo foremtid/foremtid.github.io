@@ -218,7 +218,6 @@ async function RasterBereinigen() {
         }
       }
     }
-    Spaltenanzahl = MaximaleSpaltenanzahl;
   }
 
   if (Zeilenanzahl > MaximaleZeilenanzahl) {
@@ -232,8 +231,10 @@ async function RasterBereinigen() {
         }
       }
     }
-    Zeilenanzahl = MaximaleZeilenanzahl;
   }
+
+  Zeilenanzahl = MaximaleZeilenanzahl;
+  Spaltenanzahl = MaximaleSpaltenanzahl;
 }
 
 
@@ -429,10 +430,3 @@ async function Hintergrundanimation() {
   }
 }
 Hintergrundanimation();
-
-
-
-
-
-
-
