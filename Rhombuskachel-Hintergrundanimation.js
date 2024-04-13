@@ -24,12 +24,12 @@ let Zeilenhöhe    = Segmentlänge * 1.5;
 
 let Spaltenanzahl         = 0;
 let Zeilenanzahl          = 0;
-let MaximaleSpaltenanzahl = Math.floor(window.innerWidth  / Spaltenbreite);
-let MaximaleZeilenanzahl  = Math.floor(window.innerHeight / Zeilenhöhe);
+let NeueSpaltenanzahl = Math.floor(window.innerWidth  / Spaltenbreite);
+let NeueZeilenanzahl  = Math.floor(window.innerHeight / Zeilenhöhe);
 
 // Der Versatz für das „viewBox“-Attribut
-let xVersatz = -Math.floor((window.innerWidth  - Spaltenbreite * MaximaleSpaltenanzahl) / 2);
-let yVersatz = -Math.floor((window.innerHeight - Zeilenhöhe    * MaximaleZeilenanzahl)  / 2);
+let xVersatz = -Math.floor((window.innerWidth  - Spaltenbreite * NeueSpaltenanzahl) / 2);
+let yVersatz = -Math.floor((window.innerHeight - Zeilenhöhe    * NeueZeilenanzahl)  / 2);
 
 const Hintergrund = document.getElementById('Hintergrund');
 Hintergrund.setAttribute('viewBox', xVersatz + ' ' + yVersatz + ' ' + Fensterbreite + ' ' + Fensterhöhe);
@@ -177,8 +177,8 @@ async function D_SegmenteErstellen(Z, S) {
 
 // Das Segmenteraster durch Auffüllen an den Anzeigebereich anpassen
 async function RasterAuffüllen() {
-  if (Zeilenanzahl < MaximaleZeilenanzahl) {
-    for (let Z = Zeilenanzahl + 1; Z <= MaximaleZeilenanzahl; Z++) {
+  if (Zeilenanzahl < NeueZeilenanzahl) {
+    for (let Z = Zeilenanzahl + 1; Z <= NeueZeilenanzahl; Z++) {
       // Erzeuge erstes Strichlein…
       await S_SegmentErstellen(Z, 0);
       for (let S = 1; S <= Spaltenanzahl; S++) {
@@ -187,20 +187,19 @@ async function RasterAuffüllen() {
         await D_SegmenteErstellen(Z, S);
       }
     }
+    Zeilenanzahl = NeueZeilenanzahl;
   }
 
-  if (Spaltenanzahl < MaximaleSpaltenanzahl) {
-    for (let Z = 1; Z <= MaximaleZeilenanzahl; Z++) {
-      for (let S = Spaltenanzahl + 1; S <= MaximaleSpaltenanzahl; S++) {
+  if (Spaltenanzahl < NeueSpaltenanzahl) {
+    for (let Z = 1; Z <= NeueZeilenanzahl; Z++) {
+      for (let S = Spaltenanzahl + 1; S <= NeueSpaltenanzahl; S++) {
         // Die drei Liniensegmente erstellen…
         await S_SegmentErstellen(Z, S);
         await D_SegmenteErstellen(Z, S);
       }
     }
+    Spaltenanzahl = NeueSpaltenanzahl;
   }
-
-  Zeilenanzahl  = MaximaleZeilenanzahl;
-  Spaltenanzahl = MaximaleSpaltenanzahl;
 }
 
 
@@ -209,32 +208,31 @@ async function RasterAuffüllen() {
 async function RasterBereinigen() {
   let Segment;
 
-  if (Spaltenanzahl > MaximaleSpaltenanzahl) {
+  if (NeueSpaltenanzahl < Spaltenanzahl) {
     for (let Z = 1; Z <= Zeilenanzahl; Z++) {
-      for (let S = (MaximaleSpaltenanzahl + 1); S <= Spaltenanzahl; S++) {
+      for (let S = (NeueSpaltenanzahl + 1); S <= Spaltenanzahl; S++) {
         for (let I = 0; I <= 2; I++) {
           Segment = document.getElementById('L' + Z + '_' + S + '_' + I);
-          if (Segment) Segment.remove();
+          if (Segment) await Segment.remove();
         }
       }
     }
+    Spaltenanzahl = NeueSpaltenanzahl;
   }
 
-  if (Zeilenanzahl > MaximaleZeilenanzahl) {
-    for (let Z = (MaximaleZeilenanzahl + 1); Z <= Zeilenanzahl; Z++) {
+  if (NeueZeilenanzahl < Zeilenanzahl) {
+    for (let Z = (NeueZeilenanzahl + 1); Z <= Zeilenanzahl; Z++) {
       Segment = document.getElementById('L' + Z + '_0_1');
-      if (Segment) Segment.remove();
+      if (Segment) await Segment.remove();
       for (let S = 1; S <= Spaltenanzahl; S++) {
         for (let I = 0; I <= 2; I++) {
           Segment = document.getElementById('L' + Z + '_' + S + '_' + I);
-          if (Segment) Segment.remove();
+          if (Segment) await Segment.remove();
         }
       }
     }
+    Zeilenanzahl = NeueZeilenanzahl;
   }
-
-  Zeilenanzahl = MaximaleZeilenanzahl;
-  Spaltenanzahl = MaximaleSpaltenanzahl;
 }
 
 
@@ -243,20 +241,20 @@ async function RasterBereinigen() {
 async function RasterAnAnzeigenbereichAnpassen(NeueBreite, NeueHöhe) {
   // Raster auffüllen, falls die Breite oder die Höhe des Anzeigenbereichs die Rasterbreite oder die Rasterhöhe überschreiten
   // Raster bereinigen, falls die Rasterbreite oder die Rasterhöhe den Anzeigebereich überschreiten
-  MaximaleSpaltenanzahl = Math.floor(NeueBreite / Spaltenbreite);
-  MaximaleZeilenanzahl  = Math.floor(NeueHöhe / Zeilenhöhe);
+  NeueSpaltenanzahl = Math.floor(NeueBreite / Spaltenbreite);
+  NeueZeilenanzahl  = Math.floor(NeueHöhe / Zeilenhöhe);
 
-  xVersatz = -Math.floor((NeueBreite - Spaltenbreite * MaximaleSpaltenanzahl) / 2);
-  yVersatz = -Math.floor((NeueHöhe   - Zeilenhöhe    * MaximaleZeilenanzahl)  / 2);
+  xVersatz = -Math.floor((NeueBreite - Spaltenbreite * NeueSpaltenanzahl) / 2);
+  yVersatz = -Math.floor((NeueHöhe   - Zeilenhöhe    * NeueZeilenanzahl)  / 2);
 
   Hintergrund.setAttribute('width',  NeueBreite);
   Hintergrund.setAttribute('height', NeueHöhe);
   Hintergrund.setAttribute('viewBox', xVersatz + ' ' + yVersatz + ' ' + NeueBreite + ' ' + NeueHöhe);
 
-  if (MaximaleZeilenanzahl < Zeilenanzahl || MaximaleSpaltenanzahl < Spaltenanzahl)
+  if (NeueZeilenanzahl < Zeilenanzahl || NeueSpaltenanzahl < Spaltenanzahl)
     await RasterBereinigen();
 
-  if (MaximaleZeilenanzahl > Zeilenanzahl || MaximaleSpaltenanzahl > Spaltenanzahl)
+  if (NeueZeilenanzahl > Zeilenanzahl || NeueSpaltenanzahl > Spaltenanzahl)
     await RasterAuffüllen();
 
   Fensterbreite = NeueBreite;
