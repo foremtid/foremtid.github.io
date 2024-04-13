@@ -253,11 +253,11 @@ async function RasterAnAnzeigenbereichAnpassen(NeueBreite, NeueHöhe) {
   Hintergrund.setAttribute('height', NeueHöhe);
   Hintergrund.setAttribute('viewBox', xVersatz + ' ' + yVersatz + ' ' + NeueBreite + ' ' + NeueHöhe);
 
-  if (MaximaleZeilenanzahl > Zeilenanzahl || MaximaleSpaltenanzahl > Spaltenanzahl)
-    await RasterAuffüllen();
-
   if (MaximaleZeilenanzahl < Zeilenanzahl || MaximaleSpaltenanzahl < Spaltenanzahl)
     await RasterBereinigen();
+
+  if (MaximaleZeilenanzahl > Zeilenanzahl || MaximaleSpaltenanzahl > Spaltenanzahl)
+    await RasterAuffüllen();
 
   Fensterbreite = NeueBreite;
   Fensterhöhe   = NeueHöhe;
