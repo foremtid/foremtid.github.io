@@ -31,11 +31,11 @@ async function Gestaltwandler() {
     rgBMin =  80;
     rgBMax = 176;
 
-    NeueSpaltenanzahl = 1;
-    NeueZeilenanzahl  = 1;
+    NeueSpaltenanzahl = 0;
+    NeueZeilenanzahl  = 0;
     await RasterBereinigen();
-    Fensterbreite = Spaltenbreite + 1;
-    Fensterhöhe = Zeilenhöhe + 1;
+    Fensterbreite = 0;
+    Fensterhöhe   = 0;
   } else {
     NeuesAussehen.href = 'dunkel.css';
     hell = 0;
@@ -47,11 +47,11 @@ async function Gestaltwandler() {
     rgBMin =   0;
     rgBMax =  96;
 
-    NeueSpaltenanzahl = 1;
-    NeueZeilenanzahl  = 1;
+    NeueSpaltenanzahl = 0;
+    NeueZeilenanzahl  = 0;
     await RasterBereinigen();
-    Fensterbreite = Spaltenbreite + 1;
-    Fensterhöhe = Zeilenhöhe + 1;
+    Fensterbreite = 0;
+    Fensterhöhe   = 0;
   }
 
   if (AktuellesAussehen.nextSibling) {
