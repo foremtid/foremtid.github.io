@@ -1,3 +1,5 @@
+let hell = 0;
+
 // Die Funktion „Warte“ akzeptiert eine Zeitangabe in Millisekunden als Parameter
 // und simuliert eine asynchrone Operation, indem sie eine Verzögerung um die 
 // übergebene Anzahl von Millisekunden verursacht.
@@ -11,30 +13,115 @@ async function Warte(ms) {
 
 
 
-function Gestaltwandler() {
+async function Gestaltwandler() {
   const AktuellesAussehen = document.getElementById('SpezifischeDarstellungsregeln');
 
   const NeuesAussehen = document.createElement('link');
-  NeuesAussehen.rel = 'stylesheet';
   NeuesAussehen.id = 'SpezifischeDarstellungsregeln';
-
-  const AktuellerHintergrund = document.getElementById('Hintergrund');
-  
-  const NeuerHintergrund = document.createElement('iframe');
-  NeuerHintergrund.id = "Hintergrund";
-  NeuerHintergrund.style="height:100%; width:100%; position:fixed; top:0; left:0; z-index:-1; border: none;";
+  NeuesAussehen.rel = 'stylesheet';
 
   if (AktuellesAussehen.href.includes('dunkel.css')) {
     NeuesAussehen.href = 'hell.css';
-    NeuerHintergrund.src = "Rhombuskachel-Hintergrund_hell.svg";
+    hell = 1;
+
+    RgbMin = 192;
+    RgbMax = 224;
+    rGbMin = 134;
+    rGbMax = 208;
+    rgBMin =  80;
+    rgBMax = 176;
+
+    MaximaleSpaltenanzahl = 0;
+    MaximaleZeilenanzahl = 0;
+    await RasterBereinigen();
+    Fensterbreite = 0;
+    Fensterhöhe = 0;
   } else {
     NeuesAussehen.href = 'dunkel.css';
-    NeuerHintergrund.src = "Rhombuskachel-Hintergrund_dunkel.svg";
+    hell = 0;
+
+    RgbMin = 112;
+    RgbMax = 144;
+    rGbMin =  64;
+    rGbMax = 128;
+    rgBMin =   0;
+    rgBMax =  96;
+
+    MaximaleSpaltenanzahl = 0;
+    MaximaleZeilenanzahl = 0;
+    await RasterBereinigen();
+    Fensterbreite = 0;
+    Fensterhöhe = 0;
   }
 
-  document.head.appendChild(NeuesAussehen);
+  if (AktuellesAussehen.nextSibling) {
+    document.head.insertBefore(NeuesAussehen, AktuellesAussehen.nextSibling);
+  } else {
+    document.head.appendChild(NeuesAussehen);
+  }
   document.head.removeChild(AktuellesAussehen);
+}
 
-  document.body.prepend(NeuerHintergrund);
-  document.body.removeChild(AktuellerHintergrund);
+
+
+// h(t)       = A / (1 + exp(-bt + c))  [1]
+// h(0)       = 1                       [2]
+// h(N/2)     = A-1                     [3]
+// [2], [3]   => N += 2, Ergebnis -= 1
+// Lösung des Gleichungssystems für die…
+// (1.) steigende Wachstumsfunktion
+// b: 4 * log(A-1) / N
+// c: log(A-1)
+// (2.) abnehmende Wachstumsfunktion
+// bei rückwärts laufendem Parameter (N-t)
+// b: 4 * log(A-1) / N
+// c: 3 * log(A-1)
+// Bedingungen: A > 1
+// Abbildungsbereich: t ∈ [0, N]
+async function Wachstumsfunktion(Ao, Az, N, t) {
+  if (t >= N/2) return Az;
+  if (t <= 0)   return Ao;
+
+  let D;
+  if (Ao < Az) {
+    // steigende Wachstumsfunktion
+    D = Az - Ao + 2;
+    return (Ao - 1 + D / (1 + (D - 1) ** (1 - 4 * t / N)));
+  } else if (Ao > Az) {
+    // abnehmende Wachstumsfunktion
+    D = Ao - Az + 2;
+    return (Az - 1 + D / (1 + (D - 1) ** (3 - 4 * (N-t) / N)));
+  } else return Ao;
+}
+
+
+
+// Eine Funktion, die einen zufälligen RGB-Wert
+// innerhalb eines vorgegebenen Spektrums zurückgibt
+async function ZufallsRGB(R0, R1, G0, G1, B0, B1) {
+  if (R0 < R1) {
+    R0 = Math.floor(R0 + Math.random() * (R1 - R0 + 1));
+  } else if (R0 > R1) {
+    R0 = Math.floor(R1 + Math.random() * (R0 - R1 + 1));
+  }
+
+  if (G0 < G1) {
+    G0 = Math.floor(G0 + Math.random() * (G1 - G0 + 1));
+  } else if (G0 > G1) {
+    G0 = Math.floor(G1 + Math.random() * (G0 - G1 + 1));
+  }
+
+  if (B0 < B1) {
+    B0 = Math.floor(B0 + Math.random() * (B1 - B0 + 1));
+  } else if (B0 > B1) {
+    B0 = Math.floor(B1 + Math.random() * (B0 - B1 + 1));
+  }
+
+  if (R0 < 0) R0 = 0; if (R0 > 255) R0 = 255;
+  if (G0 < 0) G0 = 0; if (G0 > 255) G0 = 255;
+  if (B0 < 0) B0 = 0; if (B0 > 255) B0 = 255;
+  
+  return '#' + parseInt(R0).toString(16).padStart(2, '0')
+             + parseInt(G0).toString(16).padStart(2, '0')
+             + parseInt(B0).toString(16).padStart(2, '0');
 }
