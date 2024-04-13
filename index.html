@@ -10,7 +10,7 @@
      content = "width=device-width, initial-scale=1.0">
     <meta
      name    = "description"
-     content = "MINT+ LNK+ Übungsaufgaben Lernprojekte">
+     content = "MINT₊ LNK₊ Übungsaufgaben Alltagsaufgaben Lernprojekte">
     <link
      rel  = "icon"
      href = "favicon.ico">
@@ -26,53 +26,65 @@
      src = "Hilfsfunktionen.js"
      defer></script>
     <script
-     src = "Kompass.js"
+     src = "Kopfzeilenkompass.js"
      defer></script>
-    <title>Denkanreize…</title>
-
-    <style>
-      .beau-rivage-regular {
-  font-family: "Beau Rivage", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
-    </style>
+    <script
+     src = "Rhombuskachel-Hintergrundanimation.js"
+     defer></script>
+    <title>Nachdenkanreize…</title>
   </head>
 
   <body>
-    <iframe
-     id    = "Hintergrund"
-     src   = "Rhombuskachel-Hintergrund_dunkel.svg"
-     style = "position:fixed; top:0; left:0;
-              height:100%; width:100%;
-              z-index:-1; border: none;">
-    </iframe>
+    <svg
+     id      = "Hintergrund"
+     xmlns   = "http://www.w3.org/2000/svg"
+     width   = "0"
+     height  = "0"
+     viewBox = "0 0 0 0"
+     preserveAspectRatio = "none"
+     style   = "position: fixed; top: 0px; left: 0px; z-index: -1; border: none;">
+    </svg>
+
+
+
+    
 
     <header
      id    = "Kopfzeile"
      style = "position: relative; min-height: 110px;
-              border: none; text-align: center; padding-left: 110px; padding-top: 15px; padding-right: 53px; margin-bottom: 16px;">
+              padding-left: 110px; padding-top: 15px; padding-right: 53px; margin-bottom: 16px;
+              border: none; text-align: center;">
+      <img
+       id      = "kzHellDunkelUmschalter"
+       src     = "Sonne-Mond.svg"
+       style   = "position: absolute; top: 10px; right: 10px; width: 32px; cursor: pointer;" 
+       onclick = "Gestaltwandler()" />
+      <img
+       id      = "kzSektionen"
+       src     = "Sektionen.png"
+       style   = "position: absolute; top: 60px; right: 10px; width: 32px; cursor: pointer;" 
+       onclick = "Gestaltwandler()" />
+      <div
+       id      = "kzSonstiges"
+       onclick = "Gestaltwandler()"
+       style   = "position: absolute; display: inline-block; right: 10px; top: 90px; font-family: 'Londrina Shadow'; font-weight: bold; font-size: 24px; cursor: context-menu;"
+      >…</div>
+    </header>
 
-      <h1 style="position: relative; margin-left: auto; margin-right: auto; margin-top:0px; display: block;" title="Sektion Mathematik, Ingenieurs- und Handwerkskunst, Naturwissenschaften, Technik und alles Andere, das im weitesten Sinne diesen Themenkomplexen zugeordnet werden kann">Sektion MINT<sub>+</sub></h1>
+
+<!--
+      <h1 style="position: relative; margin-left: auto; margin-right: auto; margin-top:0px; display: block;" title="Sektion MINT₊ – Sektion Mathematik, Ingenieurs- und Handwerkskunst, Naturwissenschaften, Technik und alles Andere, das im weitesten Sinne diesem Themenkomplex zugeordnet werden kann">Sektion MINT<sub>+</sub></h1>
       <ul style="display: inline; padding: 0px;">
-        <li style="display: inline;" title="Sektion Leben, Natur, Kultur und alles Weitere, das im weitesten Sinne diesen Themenkomplexen zugeordnet werden kann">Sektion LNK<sub>+</sub></li>
+        <li style="display: inline;" title="Sektion LNK₊ – Leben, Natur, Kultur und alles Weitere, das im weitesten Sinne diesem Themenkomplex zugeordnet werden kann">Sektion LNK<sub>+</sub></li>
         <li style="display: inline;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</li>
         <li style="display: inline;" title="Sektion Lernprojekte und Übungsaufgaben">Sektion LP</li>
       </ul>
-      <img src="Hell-Dunkel-Umschaltsymbol.png" onclick="Gestaltwandler()" style="position:absolute; top: 9px; right: 10px; height: 35px; width: auto;" />
-      <img src="Sektionen.png" onclick="Gestaltwandler()" style="position:absolute; top: 54px; right: 10px; height: 24.65px; width: auto;" />
-      <div onclick="Gestaltwandler()" style="position: absolute; right: 10px; top: 89px; border: 1.5px dashed #787878; box-shadow: 0px 0px 0px 1px rgba(127,127,127,0.6); border-radius: 42px; font-family: 'Beau Rivage', cursive; font-style: normal; color: #787878; font-size: 20px; font-kerning: normal;  text-shadow: 0.5px 0.5px 1px rgba(255,255,255,0.5); font-weight: 900; padding: 0px 15.4px 2px 12.4px;">i</div>
-    </header>
-
-    <nav>
-    </nav>
-
-    <article >
-      Info-Text… Alles noch im Aufbau…
+ 
     </article>
 
     <aside></aside>
 
     <footer></footer>
+-->
   </body>
 </html>
