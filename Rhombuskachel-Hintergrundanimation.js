@@ -1,7 +1,7 @@
 /*   ~ ~ ~~ ~~~ ~~~~~ ~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~ ~~~~~ ~~~ ~~ ~ ~   */
 /*   Vorbereitung…                                                       */
 /*   ~ ~ ~~ ~~~ ~~~~~ ~~~~~~~~ ~~~~~~~~~~~~~ ~~~~~~~~ ~~~~~ ~~~ ~~ ~ ~   */
-let HintergrundanimationAktiv = 0;
+let HintergrundanimationAktiv = true;
 
 let Streckfaktor = window.devicePixelRatio;
 
@@ -358,10 +358,10 @@ async function SegmentAufhellenOderVerdunkeln (Z, S, I, H) {
 }
 
 
-let Animationspause = false;
+
 let Aktionen = [];
 async function AktionenHinzufügen() {
-  if (Animationspause) return;
+  if (!HintergrundanimationAktiv) return;
   let Aktion  = [];
   let Zeile   = 1 + Math.floor(Math.random() * (Zeilenanzahl));
   let Spalte  = 1 + Math.floor(Math.random() * (Spaltenanzahl));
@@ -423,7 +423,12 @@ async function Hintergrundanimation() {
         case 2:
           await Animationsschritt(Aktion[1], Aktion[2], Aktion[3], Aktion[4]);
           break;
-      } else await Warte(1000);
+      } else {
+        if (!HintergrundanimationAktiv)
+          await Warte(1000);
+        else
+          continue;
+      }
 
     await Warte(Animationsgeschwindigkeit);
   }
