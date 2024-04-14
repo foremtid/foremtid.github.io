@@ -17,8 +17,9 @@ async function Gestaltwandler() {
   const AktuellesAussehen = document.getElementById('SpezifischeDarstellungsregeln');
 
   const NeuesAussehen = document.createElement('link');
-  NeuesAussehen.id = 'SpezifischeDarstellungsregeln';
-  NeuesAussehen.rel = 'stylesheet';
+  NeuesAussehen.id   = 'SpezifischeDarstellungsregeln';
+  NeuesAussehen.rel  = 'stylesheet';
+  NeuesAussehen.type = 'text/css' 
 
   if (AktuellesAussehen.href.includes('dunkel.css')) {
     NeuesAussehen.href = 'hell.css';
