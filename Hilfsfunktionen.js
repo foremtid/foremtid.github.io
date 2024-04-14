@@ -66,31 +66,39 @@ async function Gestaltwandler() {
 
 // h(t)       = A / (1 + exp(-bt + c))  [1]
 // h(0)       = 1                       [2]
-// h(N/2)     = A-1                     [3]
+// h(N/2)     = A-1                     [3] (Variante 1)
 // [2], [3]   => N += 2, Ergebnis -= 1
 // Lösung des Gleichungssystems für die…
 // (1.) steigende Wachstumsfunktion
 // b: 4 * log(A-1) / N
 // c: log(A-1)
+// h(t) = A / (1 + (A-1)^(1 - 4*t/N))
 // (2.) abnehmende Wachstumsfunktion
 // bei rückwärts laufendem Parameter (N-t)
 // b: 4 * log(A-1) / N
 // c: 3 * log(A-1)
+// h(t) = A / (1 + (A-1)^(3 - 4*(N-t)/N))
 // Bedingungen: A > 1
 // Abbildungsbereich: t ∈ [0, N]
+// h(N)       = A-1                     [3'] (Variante 2)
+// =>           c: log(A-1), b: log((A-1)²)/N
+// =>           h(t) = A / (1 + (A-1)^(1 - 2*t/N))
 async function Wachstumsfunktion(Ao, Az, N, t) {
-  if (t >= N/2) return Az;
-  if (t <= 0)   return Ao;
+  // if (t >= N/2) return Az; // für Variante 1
+  if (t >= N) return Az;
+  if (t <= 0) return Ao;
 
   let D;
   if (Ao < Az) {
     // steigende Wachstumsfunktion
     D = Az - Ao + 2;
-    return (Ao - 1 + D / (1 + (D - 1) ** (1 - 4 * t / N)));
+    // return (Ao - 1 + D / (1 + (D - 1) ** (1 - 4 * t / N))); // Variante 1
+    return (Ao - 1 + D / (1 + (D - 1) ** (1 - 2 * t / N))); // Variante 2
   } else if (Ao > Az) {
     // abnehmende Wachstumsfunktion
     D = Ao - Az + 2;
-    return (Az - 1 + D / (1 + (D - 1) ** (3 - 4 * (N-t) / N)));
+    // return (Az - 1 + D / (1 + (D - 1) ** (3 - 4 * (N-t) / N))); // Variante 1
+    return (Az - 1 + D / (1 + (D - 1) ** (1 - 2 * (N-t) / N))); // Variante 2
   } else return Ao;
 }
 
