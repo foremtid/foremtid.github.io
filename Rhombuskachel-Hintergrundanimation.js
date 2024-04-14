@@ -358,9 +358,10 @@ async function SegmentAufhellenOderVerdunkeln (Z, S, I, H) {
 }
 
 
-
+let Animationspause = false;
 let Aktionen = [];
 async function AktionenHinzufügen() {
+  if (Animationspause) return;
   let Aktion  = [];
   let Zeile   = 1 + Math.floor(Math.random() * (Zeilenanzahl));
   let Spalte  = 1 + Math.floor(Math.random() * (Spaltenanzahl));
@@ -368,7 +369,7 @@ async function AktionenHinzufügen() {
   let AktionsNr, Index, Länge, Schritt;
 
   AktionsNr = 2 * Math.random();
-  if (AktionsNr > 0.5) 
+  if (AktionsNr > 0.75) 
     AktionsNr = 2;
   else
     AktionsNr = 1;
@@ -404,7 +405,7 @@ async function AktionenHinzufügen() {
 }
 
 
-let Animationsgeschwindigkeit = 85;
+let Animationsgeschwindigkeit = 115;
 async function Hintergrundanimation() {
   let Aktion;
 
@@ -422,7 +423,7 @@ async function Hintergrundanimation() {
         case 2:
           await Animationsschritt(Aktion[1], Aktion[2], Aktion[3], Aktion[4]);
           break;
-      }
+      } else await Warte(1000);
 
     await Warte(Animationsgeschwindigkeit);
   }
