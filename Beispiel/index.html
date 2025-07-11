@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html
+  lang="de">
+
+  <head>
+    <meta
+     charset = "UTF-8">
+    <meta
+     name    = "viewport"
+     content = "width=device-width, initial-scale=1.0">
+    <meta
+     name    = "description"
+     content = "Martin Döhler Sport Leichtathletik Triathlon IronMan Tennis Hundetrainer Vermögensberatung Familie Freunde">
+    <link
+     rel     = "icon"
+     href    = "favicon.ico">
+    <link
+     id      = "AllgemeineDarstellungsregeln"
+     rel     = "stylesheet"  
+     href    = "allgemein-dunkel.css"
+     type    = "text/css" >
+    <link
+     id      = "SpezifischeDarstellungsregeln"
+     rel     = "stylesheet"  
+     href    = "variante-hell.css"
+     type    = "text/css" >
+    
+    <title>Martin Döhler – privat und geschäftlich</title>
+  </head>
+
+  <body>
+    <svg
+     id      = "Auswahl"
+     xmlns   = "http://www.w3.org/2000/svg"
+     width   = "0"
+     height  = "0"
+     viewBox = "0 0 0 0"
+     preserveAspectRatio = "none"
+     style   = "position: fixed; top: 0px; left: 0px; z-index: -1; border: none; background-color: #303030;">
+      <defs>
+        <pattern id="Flo" patternUnits="userSpaceOnUse" width="100" height="100" viewBox="0, 0, 100, 100" patternTransform="translate(35 35)">
+          <image href="Flo.png" x="0" y="0" width="100" height="100" />
+        </pattern>
+<clipPath id="Pupillenpfad">
+  <circle id="Pupillenkreis" cx="0" cy="0" r="0" />
+<!--  <rect x="0" y="0" width="100" height="100" rx="50" /> -->
+</clipPath>
+
+
+<filter id="inner-shadow-glow" x="-50%" y="-50%" width="200%" height="200%">
+  <!-- 1. Alpha erzeugen -->
+  <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur" />
+
+  <!-- 2. Innenschatten: Blur - Alpha = nur innen -->
+  <feComposite in="blur" in2="SourceAlpha" operator="arithmetic"
+               k2="-1" k3="1" result="inner-shadow"/>
+
+  <feFlood flood-color="#ff0000" flood-opacity="0.38" result="dark"/>
+  <feComposite in="dark" in2="inner-shadow" operator="in" result="inner-colored"/>
+
+  <!-- 3. Außenglühen -->
+  <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="outer-blur"/>
+  <feFlood flood-color="#ffffff" flood-opacity="0.38" result="light"/>
+  <feComposite in="light" in2="outer-blur" operator="in" result="outer-glow"/>
+
+  <!-- 4. Alles zusammenführen -->
+  <feMerge>
+    <feMergeNode in="outer-glow"/>
+    <feMergeNode in="inner-colored"/>
+    <feMergeNode in="SourceGraphic"/>
+  </feMerge>
+</filter>
+      </defs>
+<!--
+<image
+  id = "Pupillenbild"
+  href="Tennisaufschlag.jpg"
+  width="100"
+  height="100"
+  clip-path="url(#Pupillenbildrundung)"
+/> -->
+
+    </svg>
+
+    <!--
+    <div id="Rahmen">
+      <div>Hallo Welt </div>
+    </div>
+    -->
+
+    <script
+     src     = "Auswahl.js"
+     defer></script>
+  </body>
+</html>
