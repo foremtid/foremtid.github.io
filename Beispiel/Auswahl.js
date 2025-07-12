@@ -13,6 +13,7 @@ async function Warte(ms) {
 
 let P1 = (1 + Math.sqrt(5)) / 2;
 let P2 = (3 + Math.sqrt(5)) / 2;
+const Pixeldichte = window.devicePixelRatio;
 let AktuelleFensterbreite = window.innerWidth;   // Werden benötigt, um auf
 let AktuelleFensterhöhe   = window.innerHeight;  // Veränderungen zu reagieren
 let Fensterbreite         = 0;
@@ -22,13 +23,6 @@ let FenstermitteY         = Math.floor(Fensterhöhe / 2);
 let HalbeAuswahlbreite    = 0;
 let HalbeAuswahlhöhe      = 0;
 let Skalierungsfaktor     = 1;
-if (Fensterbreite > P2 * Fensterhöhe) {
-  HalbeAuswahlhöhe   = Fensterhöhe - 32;
-  HalbeAuswahlbreite = Math.max(0, Math.ceil(HalbeAuswahlhöhe * P2));
-} else {
-  HalbeAuswahlbreite = Fensterbreite - 32;
-  HalbeAuswahlhöhe   = Math.max(0, Math.ceil(HalbeAuswahlbreite / P2));
-}
 
 
 
@@ -55,14 +49,22 @@ Auswahl.append(Pupille);
 async function MaßeNeuBestimmen(NeueBreite, NeueHöhe) {
   FenstermitteX     = Math.floor(NeueBreite / 2);
   FenstermitteY     = Math.floor(NeueHöhe / 2);
-  if (NeueBreite > P2 * NeueHöhe) {
-    Skalierungsfaktor  = 1 / P2 + (1 / P1) * (1 + Math.cos(Math.min(Math.PI, Math.sqrt(NeueHöhe * NeueHöhe + NeueBreite * NeueBreite) / 1402.41))) / 2; //687.55
-    HalbeAuswahlhöhe   = Math.ceil((NeueHöhe / P1 - 32) * Skalierungsfaktor);
-    HalbeAuswahlbreite = Math.ceil(HalbeAuswahlhöhe * P2);
+
+  if (NeueBreite > NeueHöhe) {
+    HalbeAuswahlhöhe   = (NeueHöhe / 2 - 32);
+    if (Pixeldichte   == 1) HalbeAuswahlhöhe /= P2;
+    HalbeAuswahlbreite = HalbeAuswahlhöhe;
+
+//    Skalierungsfaktor  = 1 / P1 + (1 / P2) * (1 + Math.cos(Math.min(Math.PI, Math.sqrt(NeueHöhe * NeueHöhe + NeueBreite * NeueBreite) / 1402.41))) / 2; //687.55
+//    HalbeAuswahlhöhe   = Math.ceil((NeueHöhe / P1 - 32) * Skalierungsfaktor);
+//    HalbeAuswahlbreite = Math.ceil(HalbeAuswahlhöhe * P2);
   } else {
-    Skalierungsfaktor = 1 / P2 + (1 / P1) * (1 + Math.cos(Math.min(Math.PI, Math.sqrt(NeueHöhe * NeueHöhe + NeueBreite * NeueBreite) / 1402.41))) / 2; //1222.31
-    HalbeAuswahlbreite = Math.ceil((NeueBreite / P1 - 32) * Skalierungsfaktor);
-    HalbeAuswahlhöhe   = Math.ceil(HalbeAuswahlbreite / P2);
+    HalbeAuswahlbreite = (NeueBreite / 2 - 32);
+    if (Pixeldichte   == 1) HalbeAuswahlbreite /= P2;
+    HalbeAuswahlhöhe   = HalbeAuswahlbreite;
+//    Skalierungsfaktor = 1 / P2 + (1 / P1) * (1 + Math.cos(Math.min(Math.PI, Math.sqrt(NeueHöhe * NeueHöhe + NeueBreite * NeueBreite) / 1402.41))) / 2; //1222.31
+//    HalbeAuswahlbreite = Math.ceil((NeueBreite / P1 - 32) * Skalierungsfaktor);
+//    HalbeAuswahlhöhe   = Math.ceil(HalbeAuswahlbreite / P2);
   }
 }
 
