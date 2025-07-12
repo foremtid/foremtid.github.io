@@ -122,7 +122,7 @@ async function ZeichneKSO() {
   BPO.setAttribute('stroke', 'none');
   Auswahl.append(BPO);
 
-  SBEO.setAttribute('fill', '#ecac69');
+  SBEO.setAttribute('fill', '#fcac57');
   SBEO.setAttribute('font-size', '48');
   SBEO.setAttribute('font-family', '"Londrina Shadow", sans-serif');
   SBEO.setAttribute('font-weight', 'bold');
@@ -189,7 +189,7 @@ async function ZeichneKSL() {
   BPL.setAttribute('stroke', 'none');
   Auswahl.append(BPL);
 
-  SBEL.setAttribute('fill', '#ecac69');
+  SBEL.setAttribute('fill', '#fcac57');
   SBEL.setAttribute('font-size', '48');
   SBEL.setAttribute('font-family', '"Londrina Shadow", sans-serif');
   SBEL.setAttribute('font-weight', 'bold');
@@ -256,7 +256,7 @@ async function ZeichneKSR() {
   BPR.setAttribute('stroke', 'none');
   Auswahl.append(BPR);
 
-  SBER.setAttribute('fill', '#ecac69');
+  SBER.setAttribute('fill', '#fcac57');
   SBER.setAttribute('font-size', '48');
   SBER.setAttribute('font-family', '"Londrina Shadow", sans-serif');
   SBER.setAttribute('font-weight', 'bold');
