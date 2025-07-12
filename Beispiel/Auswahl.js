@@ -51,16 +51,16 @@ async function MaßeNeuBestimmen(NeueBreite, NeueHöhe) {
   FenstermitteY     = Math.floor(NeueHöhe / 2);
 
   if (NeueBreite > NeueHöhe) {
-    HalbeAuswahlhöhe   = (NeueHöhe / 2 - 32);
-    if (Pixeldichte   == 1) HalbeAuswahlhöhe /= P2;
+    HalbeAuswahlhöhe   = (NeueHöhe / 2 - 32) * Pixeldichte;
+    // if (Pixeldichte   == 1) HalbeAuswahlhöhe /= P2;
     HalbeAuswahlbreite = HalbeAuswahlhöhe;
 
 //    Skalierungsfaktor  = 1 / P1 + (1 / P2) * (1 + Math.cos(Math.min(Math.PI, Math.sqrt(NeueHöhe * NeueHöhe + NeueBreite * NeueBreite) / 1402.41))) / 2; //687.55
 //    HalbeAuswahlhöhe   = Math.ceil((NeueHöhe / P1 - 32) * Skalierungsfaktor);
 //    HalbeAuswahlbreite = Math.ceil(HalbeAuswahlhöhe * P2);
   } else {
-    HalbeAuswahlbreite = (NeueBreite / 2 - 32);
-    if (Pixeldichte   == 1) HalbeAuswahlbreite /= P2;
+    HalbeAuswahlbreite = (NeueBreite / 2 - 32) * Pixeldichte;
+    // if (Pixeldichte   == 1) HalbeAuswahlbreite /= P2;
     HalbeAuswahlhöhe   = HalbeAuswahlbreite;
 //    Skalierungsfaktor = 1 / P2 + (1 / P1) * (1 + Math.cos(Math.min(Math.PI, Math.sqrt(NeueHöhe * NeueHöhe + NeueBreite * NeueBreite) / 1402.41))) / 2; //1222.31
 //    HalbeAuswahlbreite = Math.ceil((NeueBreite / P1 - 32) * Skalierungsfaktor);
